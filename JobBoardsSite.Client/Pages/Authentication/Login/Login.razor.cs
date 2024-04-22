@@ -1,6 +1,6 @@
 ﻿namespace JobBoardsSite.Client.Pages.Authentication.Login
 {
-    public class Login
+    public partial class Login
     {
     }
 }
