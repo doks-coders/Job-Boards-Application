@@ -1,0 +1,55 @@
+﻿
+
+<div class="d-flex gap-10 mb-10">
+	<MudTextField Style="flex-grow:2" @bind-Value="@_normalText" HelperText="@_normalText" Label="Search Job Title, Keywords" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" />
+	<MudSelect Style="flex-grow:2" T="string" Label="Region" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+		<MudSelectItem  Value="@("Nigeria")" />
+		<MudSelectItem  Value="@("Ghana")" />
+		<MudSelectItem  Value="@("Benin")" />
+	</MudSelect>
+
+	<!--Multi Select-->
+
+	<MudSelect Style="flex-grow:1" Variant="Variant.Outlined" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" MultiSelection="true" @bind-Value="value" @bind-SelectedValues="options" T="string" Label="Filters" AdornmentIcon="@Icons.Material.Filled.Search" AnchorOrigin="Origin.BottomCenter">
+		@foreach (var tags in filterTags)
+		{
+			<MudSelectItem T="string" Value="@tags">@tags</MudSelectItem>
+		}
+	</MudSelect>
+</div>
+
+
+
+
+
+@code {
+	public string _normalText = "";
+
+
+	//->Multi Select
+	private bool multiselectionTextChoice = true;
+	private string value { get; set; } = "Nothing selected";
+	private IEnumerable<string> options { get; set; } = new HashSet<string>() { "Coder" };
+
+	private string[] filterTags =
+	{
+		"Coder", "Developer", "Real Estate", "California", "Colorado", "Connecticut"
+	};
+
+	private string GetMultiSelectionText(List<string> selectedValues)
+	{
+		if (multiselectionTextChoice)
+		{
+			return $"Selected tags {(selectedValues.Count > 1 ? "s" : "")}: {string.Join(", ", selectedValues.Select(x => x))}";
+		}
+		else
+		{
+			return $"{selectedValues.Count} state{(selectedValues.Count > 1 ? "s have" : " has")} been selected";
+		}
+	}
+}
+
+
+@code {
+
+}
