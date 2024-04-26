@@ -1,0 +1,192 @@
+﻿@page "/upsert-job-applicant"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+	<DataAnnotationsValidator />
+	<MudGrid Class="d-flex justify-center">
+		<MudItem xs="12" sm="7">
+			<MudCard>
+				<MudCardContent>
+					<MudTextField Label="Name" Class="mt-3"
+								  @bind-Value="model.Name" For="@(() => model.Name)" />
+
+					<MudTextField Label="Phone Number" Class="mt-3"
+								  @bind-Value="model.PhoneNumber" For="@(() => model.PhoneNumber)" />
+
+					<MudTextField Label="Title" Class="mt-3"
+								  @bind-Value="model.Title" For="@(() => model.Title)" />
+
+
+					@foreach (var val in GetSelectedSkills())
+					{
+						<MudChip Variant="Variant.Outlined" OnClose="()=>RemoveCheckSkill(val.Name)" Color="Color.Primary">@val.Name</MudChip>
+					}
+
+					
+
+					<MudAutocomplete T="Skill" Label="Select Skill" @bind-Value="value1"
+									 SearchFunc="@SearchSkill" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+						<ItemTemplate Context="e">
+							<MudCheckBox @onkeypress="()=>OnCheckSkill(e.Name)" @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
+
+						</ItemTemplate>
+					</MudAutocomplete>
+
+
+					<MudAutocomplete T="string" Label="Country" @bind-Value="model.Country"
+									 SearchFunc="@SearchCountries" />
+
+					<MudAutocomplete T="string" Label="Cities" @bind-Value="model.City"
+									 SearchFunc="@SearchCities" />
+
+					<MudTextField Lines="5" Label="About Yourself" Class="mt-3"
+								  @bind-Value="model.ShortBio" For="@(() => model.ShortBio)" />
+					<MudTextField Label="Average Salary" Class="mt-3"
+								  @bind-Value="model.AverageSalary" For="@(() => model.AverageSalary)" />
+
+				</MudCardContent>
+				
+				<div Class="pa-3">
+					<MudText Style="text-align:center;font-weight:bold">WORK EXPERIENCE</MudText>
+					@foreach (var work in workExp)
+					{
+						<div Class="pa-3 mt-3">
+							<MudTextField Label="Company" Class="mt-3"
+										  @bind-Value="work.Company" For="@(() => work.Company)" />
+
+							<MudTextField Label="Title" Class="mt-3"
+										  @bind-Value="work.Title" For="@(() => work.Title)" />
+
+							<MudTextField Label="Location" Class="mt-3"
+										  @bind-Value="work.Location" For="@(() => work.Location)" />
+
+							<MudTextField Label="Duration" Class="mt-3"
+										  @bind-Value="work.Duration" For="@(() => work.Duration)" />
+
+							<MudTextField Lines="3" Label="Summary" Class="mt-3"
+										  @bind-Value="work.Summary" For="@(() => work.Summary)" />
+						</div>
+					}
+					<div class="d-flex justify-center">
+						<MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="()=>AddWorkExperience()">Add Work Experience</MudButton>
+					</div>
+
+				</div>
+				<MudCardActions>
+					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save</MudButton>
+				</MudCardActions>
+			</MudCard>
+		</MudItem>
+
+	</MudGrid>
+</EditForm>
+@code {
+	RegisterAccountForm model = new RegisterAccountForm();
+	List<WorkExperience> workExp = new();
+	private Skill value1 = new() { Name = "" };
+	bool success;
+
+
+
+	public class Skill
+	{
+		public string Name { get; set; }
+		public bool Selected { get; set; } = false;
+	}
+	public List<Skill> skillList { get; set; } = new List<Skill>()
+	{
+		new (){Name="BootStrap"},new (){Name="Python"},new (){Name="Javascript"}
+	};
+
+	public List<string> Countries { get; set; } = new() { "Nigeria", "Ghana", "Benin" };
+	public List<string> Cities { get; set; } = new() { "Lagos", "Abuja", "Port Harcourt" };
+
+	public class WorkExperience
+	{
+		[Required]
+		public string Location { get; set; }
+
+		[Required]
+		public string Company { get; set; }
+
+		[Required]
+		public string Title { get; set; }
+		[Required]
+		public string Duration { get; set; }
+		[Required]
+		public string Summary { get; set; }
+
+	}
+
+
+	public class RegisterAccountForm
+	{
+		[Required]
+		public string Name { get; set; }
+
+		[Required]
+		[Phone]
+		public string PhoneNumber { get; set; }
+
+		[Required]
+		public string Title { get; set; }
+
+		[Required]
+		public string Country { get; set; }
+
+		[Required]
+		public string AverageSalary { get; set; }
+
+		[Required]
+		public string City { get; set; }
+
+		[Required]
+		public string ShortBio { get; set; }
+
+	}
+
+
+	private async Task<IEnumerable<string>> SearchCountries(string s)
+		=>  Countries.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
+	
+
+	private async Task<IEnumerable<string>> SearchCities(string s)
+		=> Cities.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
+	
+
+	/*This section is for skill search*/
+	private async Task<IEnumerable<Skill>> SearchSkill(string value)
+	=> skillList.Where(u => u.Name.ToLower().Contains(value.ToLower())).ToList();
+
+	
+	private List<Skill> GetSelectedSkills()
+	{
+		return skillList.Where(u => u.Selected == true).ToList();
+	}
+	private void OnCheckSkill(string value)
+	{
+		var skill = skillList.Where(u => u.Name == value).FirstOrDefault();
+		skill.Selected = !skill.Selected;
+	}
+	private void RemoveCheckSkill(string value)
+	{
+		var skill = skillList.Where(u => u.Name == value).FirstOrDefault();
+		skill.Selected = false;
+	}
+
+
+	private void AddWorkExperience()
+	{
+		workExp.Add(new());
+	}
+
+	private void OnValidSubmit(EditContext context)
+	{
+		success = true;
+		StateHasChanged();
+
+	}
+
+}

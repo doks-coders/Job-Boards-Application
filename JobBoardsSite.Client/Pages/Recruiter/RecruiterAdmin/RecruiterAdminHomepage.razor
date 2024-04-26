@@ -1,0 +1,86 @@
+﻿@page "/recruiter-admin-homepage"
+<MudGrid>
+	<MudItem xs="12" md="6">
+		<MudCard Elevation="2">
+			<MudCardContent Class="d-flex align-center">
+				<MudImage Class="mr-3" Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
+				<div class="d-flex justify-center flex-column">
+					<MudText Style="font-weight:bold">Microsoft</MudText>
+					<MudText Typo="Typo.subtitle2" >Abuja</MudText>
+					<MudText Typo="Typo.subtitle2">Software and Hardware</MudText>
+					<MudText Typo="Typo.subtitle2">jobs@microsoft</MudText>
+				</div>
+				
+			</MudCardContent>
+			<MudCardActions Class="d-flex justify-center">
+				<MudButton Variant="Variant.Text" Color="Color.Primary">Go To Profile</MudButton>
+			</MudCardActions>
+				
+		</MudCard>
+	</MudItem>
+	<MudItem xs="12" md="6">
+		<MudCard Elevation="2">
+			<MudCardContent Class="d-flex pa-0 align-center flex-column">
+				<MudImage Class="my-2" Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
+				<MudText Style="font-weight:bold">Create New Job</MudText>
+			</MudCardContent>
+			<MudCardActions Class="d-flex justify-center">
+				<MudButton Variant="Variant.Text" Color="Color.Primary">Create</MudButton>
+			</MudCardActions>
+		</MudCard>
+	</MudItem>
+	<MudItem xs="12" md="6">
+		<MudCard>
+			<MudCardHeader Style="font-weight:bold;">Current Applicants</MudCardHeader>
+			<MudCardContent>
+				<MudDataGrid Breakpoint="Breakpoint.None" Elevation="0" Items="@Elements.Take(4)">
+					<Columns>
+						<PropertyColumn Property="x => x.Name" Title="Name" />
+						<PropertyColumn Property="x => x.Age" Title="Job" />
+						<PropertyColumn Property="x => x.Location" Title="Email" />
+					</Columns>
+				</MudDataGrid>
+			</MudCardContent>
+			<MudCardActions Class="d-flex justify-end">
+				<MudButton Variant="Variant.Text" Color="Color.Primary">Check Applicants</MudButton>
+			</MudCardActions>
+		</MudCard>
+		
+	</MudItem>
+
+	<MudItem xs="12" md="6">
+		<MudCard>
+			<MudCardHeader Style="font-weight:bold;">Current Jobs</MudCardHeader>
+			<MudCardContent>
+				<MudDataGrid Breakpoint="Breakpoint.None" Elevation="0" Items="@Elements.Take(4)">
+					<Columns>
+						<PropertyColumn Property="x => x.Name" Title="Job Title" />
+						<PropertyColumn Property="x => x.Age" Title="Seeker Title" />
+						<PropertyColumn Property="x => x.Location" />
+					</Columns>
+				</MudDataGrid>
+			</MudCardContent>
+			<MudCardActions Class="d-flex justify-end">
+				<MudButton Variant="Variant.Text" Color="Color.Primary">Check Jobs</MudButton>
+			</MudCardActions>
+		</MudCard>
+	</MudItem>
+
+</MudGrid>
+
+
+
+
+@code {
+	private List<Element> Elements = new List<Element>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		Elements = new()
+		{
+			new Element(){Name="Daniel", Age=2,Location="Others"},
+			new Element(){Name="Daniel", Age=2,Location="Others"},
+			new Element(){Name="Daniel", Age=2,Location="Others"},
+		};
+	}
+}

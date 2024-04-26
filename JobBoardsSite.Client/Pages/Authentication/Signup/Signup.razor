@@ -1,67 +1,61 @@
 ﻿@page "/sign-up"
-<MudCard>
-	<MudForm Model="@model" @ref="@form"
-			 Validation="@(orderValidator.ValidateValue)" ValidationDelay="0">
-		<MudCardContent>
-				<MudTextField @bind-Value="model.Name"                              
-							  For="@(() => model.Name)"
-							  Immediate="true"
-							  Label="Name" />
 
-				<MudTextField @bind-Value="model.Email"
-							  For="@(() => model.Email)"
-							  Immediate="true"
-							  Label="Email" />
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
 
-				<MudTextField @bind-Value="model.CCNumber"
-							  For="@(() => model.CCNumber)"
-							  Immediate="true"
-							  Label="Credit card nr" />
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+<DataAnnotationsValidator/>
+    <MudText Class="mb-2" Align="Align.Center">Sign Up</MudText>
+<MudGrid Class="d-flex justify-center">
+    <MudItem xs="12" sm="7">
+        <MudCard>
+            <MudCardContent>
+                <MudTextField Label="First name" HelperText="Max. 8 characters"
+                              @bind-Value="model.Username" For="@(() => model.Username)"/>
+                <MudTextField Label="Email" Class="mt-3"
+                              @bind-Value="model.Email" For="@(() => model.Email)"/>
+                <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                              @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
+                <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+                              @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password"/>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
 
-				<MudTextField @bind-Value="model.Address.Address"
-							  For="@(() => model.Address.Address)"
-							  Immediate="true"
-							  Label="Address" />
+</MudGrid>
+</EditForm>
+@code {
+    RegisterAccountForm model = new RegisterAccountForm();
+    bool success;
 
-				<MudTextField @bind-Value="model.Address.City"
-							  For="@(() => model.Address.City)"
-							  Immediate="true"
-							  Label="City" />
+    public class RegisterAccountForm
+    {
+        [Required]
+        [StringLength(8, ErrorMessage = "Name length can't be more than 8.")]
+        public string Username { get; set; }
 
-				<MudTextField @bind-Value="model.Address.Country"
-							  For="@(() => model.Address.Country)"
-							  Immediate="true"
-							  Label="Country" />
-        </MudCardContent>
-		<MudCardContent Class="pa-0">
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
-			<MudTable Items="@model.OrderDetails" Hover="true" Breakpoint="Breakpoint.None" Dense="@true" Elevation="0">
-				<HeaderContent>
-					<MudTh>Description</MudTh>
-					<MudTh>Offer</MudTh>
-				</HeaderContent>
-				<RowTemplate>
-					<MudTd DataLabel="Description">
-						<MudForm Model="@context" Validation=@(orderDetailsValidator.ValidateValue)>
-  							<MudTextField Label="Enter Description" 
-                              @bind-Value="context.Description" 
-                              For="(() => context.Description)" />
-  						</MudForm>
-					</MudTd>
-					<MudTd DataLabel="Offer">
-						<MudForm Model="@context">
-  							<MudNumericField Label="Enter Offer" 
-                                               @bind-Value="context.Offer" 
-                                               Validation=@(orderDetailsValidator.ValidateValue)
-                                               For="(() => context.Offer)" />
-  						</MudForm>
-					</MudTd>
-				</RowTemplate>
-			</MudTable>
+        [Required]
+        [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
+        public string Password { get; set; }
 
-		</MudCardContent>
-	</MudForm>
-    <MudCardActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Order</MudButton>
-    </MudCardActions>
-</MudCard>
+        [Required]
+        [Compare(nameof(Password))]
+        public string Password2 { get; set; }
+
+    }
+
+    private void OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+       
+    }
+
+}

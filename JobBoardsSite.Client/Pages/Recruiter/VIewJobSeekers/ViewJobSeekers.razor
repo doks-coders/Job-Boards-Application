@@ -1,4 +1,4 @@
-﻿
+﻿@page "/view-job-seekers"
 
 <MudGrid>
 	<MudItem xs="12" md="6">
@@ -20,14 +20,40 @@
 		</MudSelect>
 	</MudItem>
 </MudGrid>
-	
 
-	<!--Multi Select-->
+<MudGrid>
+	<MudItem sm="4">
+        <MudCard>
+            <MudCardContent Class="d-flex align-center flex-column">
+                <MudImage Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
+                <MudText Style="font-weight:bold">Daniel Odokuma</MudText>
+                <MudText Typo="Typo.body2">React Developer</MudText>
+            </MudCardContent>
+            <div class="d-flex justify-center">
+                <MudRating ReadOnly="true" SelectedValue="2" />
+            </div>
+            <MudCardActions Class="d-flex justify-center">
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Check Profile</MudButton>
+            </MudCardActions>
+        </MudCard>
+	</MudItem>
 
-	
-
-
-
+    <MudItem sm="4">
+		<MudCard>
+			<MudCardContent Class="d-flex align-center flex-column">
+				<MudImage Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
+				<MudText Style="font-weight:bold">Daniel Odokuma</MudText>
+				<MudText Typo="Typo.body2">React Developer</MudText>
+			</MudCardContent>
+			<div class="d-flex justify-center">
+				<MudRating ReadOnly="true" SelectedValue="2" />
+			</div>
+			<MudCardActions Class="d-flex justify-center">
+				<MudButton Variant="Variant.Text" Color="Color.Primary">Check Profile</MudButton>
+			</MudCardActions>
+		</MudCard>
+    </MudItem>
+</MudGrid>
 
 
 @code {
@@ -55,9 +81,4 @@
 			return $"{selectedValues.Count} state{(selectedValues.Count > 1 ? "s have" : " has")} been selected";
 		}
 	}
-}
-
-
-@code {
-
 }
