@@ -1,0 +1,53 @@
+﻿
+
+<MudAutocomplete T="string" Label="@Label" @bind-Value="Value"
+				 SearchFunc="@Search" @bind-Value:after="OnValueChanged">
+</MudAutocomplete>
+@code {
+
+	[Parameter]
+	public string Value { get; set; }
+
+	[Parameter]
+	public string SearchItems { get; set; }
+
+	[Parameter]
+	public string Label { get; set; }
+
+	[Parameter]
+	public EventCallback<string> ValueChanged { get; set; }
+
+	public List<string> Items { get; set; } = new() { "Nigeria", "Ghana", "Benin" };
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (!string.IsNullOrEmpty(SearchItems))
+		{
+			var values = SearchItems.Split("||", StringSplitOptions.RemoveEmptyEntries);
+
+			Items = values.ToList();
+		}
+	}
+
+	private async Task<IEnumerable<string>> Search(string s)
+	{
+		await ValueChanged.InvokeAsync(s);
+		return Items.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
+	}
+
+	private async Task OnItemClick(string e)
+	{
+		StateHasChanged();
+		await ValueChanged.InvokeAsync(e);
+
+	}
+
+	private async Task OnValueChanged()
+	{
+		await ValueChanged.InvokeAsync(Value);
+
+	}
+
+}
+

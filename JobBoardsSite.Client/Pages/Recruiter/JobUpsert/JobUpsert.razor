@@ -19,56 +19,21 @@
 					<MudTextField Label="Salary" Class="mt-3"
 								  @bind-Value="model.Salary" For="@(() => model.Salary)" />
 
-
-					@foreach (var val in GetSelectedSkills())
-					{
-						<MudChip Variant="Variant.Outlined" OnClose="()=>RemoveCheckSkill(val.Name)" Color="Color.Primary">@val.Name</MudChip>
-					}
-
+					<MultiChipSelectComponent Value="Javascript||Nodejs||Visual Studio"
+											  Skills="Javascript||Nodejs||Visual Studio||Python"
+											  Label="Select Skill"
+											  ValueChanged="(e)=>{model.SelectedSkills = e;}" />
 
 
-					<MudAutocomplete T="Skill" Label="Select Skill" @bind-Value="value1"
-									 SearchFunc="@SearchSkill" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
-						<ItemTemplate Context="e">
-							<MudCheckBox @onkeypress="()=>OnCheckSkill(e.Name)" @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
 
-						</ItemTemplate>
-					</MudAutocomplete>
-
-
-				
 					<MudTextField Label="Contact Email" Class="mt-3"
 								  @bind-Value="model.ContactEmail" For="@(() => model.ContactEmail)" />
 
 				</MudCardContent>
 
 				<div Class="pa-3">
-					<MudText Style="text-align:center;font-weight:bold">Responsibilites</MudText>
-					@foreach (var responsibility in Responsibilites)
-					{
-						<div Class="pa-3 mt-3">
-							<MudTextField Label="Responsibility" Class="mt-3"
-										  @bind-Value="responsibility._value" For="@(() => responsibility._value)" />
-
-						</div>
-					}
-					<div class="d-flex justify-center">
-						<MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="()=>AddResponsibility()">Add Responsibility</MudButton>
-					</div>
-
-					<MudText Style="text-align:center;font-weight:bold">Qualifications</MudText>
-					@foreach (var qualification in Qualifications)
-					{
-						<div Class="pa-3 mt-3">
-							<MudTextField Label="Qualifications" Class="mt-3"
-										  @bind-Value="qualification._value" For="@(() => qualification._value)" />
-
-						</div>
-					}
-					<div class="d-flex justify-center">
-						<MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="()=>AddQualifications()">Add Work Experience</MudButton>
-					</div>
-
+					<MultiListItem ValueChanged="(e)=>{model.Responsiblities = e;}" Label="Responsibility" />
+					<MultiListItem ValueChanged="(e)=>{model.Qualifications = e;}" Label="Qualification" />
 				</div>
 				<MudCardActions>
 					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save</MudButton>
@@ -81,12 +46,11 @@
 
 @code {
 	JobItem model = new JobItem();
-	private Skill value1 = new() { Name = "" };
+
 
 	bool success;
 
-	public List<Value> Responsibilites = new() { new() };
-	public List<Value> Qualifications = new() { new() };
+
 	public class JobItem
 	{
 		[Required]
@@ -99,6 +63,15 @@
 		public string Salary { get; set; }
 
 		[Required]
+		public string Responsiblities { get; set; }
+
+		[Required]
+		public string SelectedSkills { get; set; }
+
+		[Required]
+		public string Qualifications { get; set; }
+
+		[Required]
 		public string JobFunction { get; set; }
 
 		[Required]
@@ -107,62 +80,14 @@
 
 	}
 
-	public class Skill
-	{
-		public string Name { get; set; }
-		public bool Selected { get; set; } = false;
-	}
 
-	public class Value
-	{
-		public string _value { get; set; } = "";
-	}
-	public List<Skill> skillList { get; set; } = new List<Skill>()
-	{
-		new (){Name="BootStrap"},new (){Name="Python"},new (){Name="Javascript"}
-	};
-
-	
 
 	/*This section is for skill search*/
-	private async Task<IEnumerable<Skill>> SearchSkill(string value)
-	=> skillList.Where(u => u.Name.ToLower().Contains(value.ToLower())).ToList();
-
-
-	private List<Skill> GetSelectedSkills()
-	{
-		return skillList.Where(u => u.Selected == true).ToList();
-	}
-	private void OnCheckSkill(string value)
-	{
-		var skill = skillList.Where(u => u.Name == value).FirstOrDefault();
-		skill.Selected = !skill.Selected;
-	}
-	private void RemoveCheckSkill(string value)
-	{
-		var skill = skillList.Where(u => u.Name == value).FirstOrDefault();
-		skill.Selected = false;
-	}
 
 
 
-	
 
 
-	private void AddResponsibility()
-	{
-		Responsibilites.Add(new());
-	}
-	private void AddQualifications()
-	{
-		Qualifications.Add(new());
-	}
-	
-
-	private void RemoveResponsiblity(int id)
-	{
-		Responsibilites.RemoveAt(id);
-	}
 
 	private void OnValidSubmit(EditContext context)
 	{

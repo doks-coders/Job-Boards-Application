@@ -1,0 +1,108 @@
+﻿<div class="mt-3">
+	@foreach (var val in GetSelectedItems())
+{
+	<MudChip Variant="Variant.Outlined" OnClose="()=>RemoveCheckItem(val.Name)" Color="Color.Primary">@val.Name</MudChip>
+}
+
+	<MudAutocomplete T="ChipSelectItem" Label="@GetLength()"
+					 SearchFunc="@SearchItem" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+		<ItemTemplate  Context="e">
+			<MudItem @onkeypress="()=>OnCheckItem(e.Name)">
+				<MudCheckBox  @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
+			</MudItem>
+	</ItemTemplate>
+</MudAutocomplete>
+</div>
+
+@code {
+
+	[Parameter]
+	public string Value { get; set; }
+
+	[Parameter]
+	public string Skills { get; set; }
+
+
+	[Parameter]
+	public string Label { get; set; }
+
+	[Parameter]
+	public EventCallback<string> ValueChanged { get; set; }
+
+
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (!string.IsNullOrEmpty(Skills))
+		{
+			var skills = Skills.Split("||",StringSplitOptions.RemoveEmptyEntries);
+			itemList = skills.Select(val => new ChipSelectItem() { Name = val }).ToList();
+		}
+		if (!string.IsNullOrEmpty(Value))
+		{
+			var values = Value.Split("||", StringSplitOptions.RemoveEmptyEntries);
+			values.ToList().ForEach(val =>
+			{
+				var item = itemList.Where(u => u.Name == val).FirstOrDefault();
+				if (item != null)
+				{
+					item.Selected = true;
+				}
+			});
+		}
+	}
+
+	private ChipSelectItem value = new() { Name = "" };
+
+	public class ChipSelectItem
+	{
+		public string Name { get; set; }
+		public bool Selected { get; set; } = false;
+	}
+
+	public List<ChipSelectItem> itemList { get; set; } = new List<ChipSelectItem>()
+	{
+		new (){Name="BootStrap"},new (){Name="Python"},new (){Name="Javascript"}
+	};
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+	}
+	private async Task<IEnumerable<ChipSelectItem>> SearchItem(string value)
+	=> itemList.Where(u => u.Name.ToLower().Contains(value.ToLower())).ToList();
+
+
+	private List<ChipSelectItem> GetSelectedItems()
+	{
+		return itemList.Where(u => u.Selected == true).ToList();
+	}
+	private async Task OnCheckItem(string value)
+	{
+		Value = "";
+		var item = itemList.Where(u => u.Name == value).FirstOrDefault();
+		item.Selected = !item.Selected;
+	
+		await ValueChanged.InvokeAsync(GetStringOfSelectedItems());
+	}
+	private async Task RemoveCheckItem(string value)
+	{
+		var item = itemList.Where(u => u.Name == value).FirstOrDefault();
+		item.Selected = false;
+		await ValueChanged.InvokeAsync(GetStringOfSelectedItems());
+	}
+
+	private string GetStringOfSelectedItems()
+	{
+		var items =  itemList.Where(u => u.Selected == true).Select(e=>e.Name).ToArray();
+		return string.Join("||", items);
+
+	}
+	private string GetLength()
+	{
+		var items = itemList.Where(u => u.Selected == true).Select(e => e.Name).ToArray();
+		if (items.Count() == 0) return $"Select {Label}";
+		return $"{items.Count()} items selected";
+	}
+}

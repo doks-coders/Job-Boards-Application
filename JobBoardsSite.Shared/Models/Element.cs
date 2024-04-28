@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JobBoardsSite.Shared.Models
+﻿namespace JobBoardsSite.Shared.Models
 {
     public class Element
     {
-        public string Name {  get; set; }
+        public string Name { get; set; }
 
         public int Age { get; set; }
 

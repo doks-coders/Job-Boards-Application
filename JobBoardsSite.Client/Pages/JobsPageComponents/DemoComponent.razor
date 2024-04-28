@@ -1,0 +1,16 @@
+﻿<!-- MyCustomComponent.razor -->
+<input type="text" @bind-value="@Value" @oninput="(e)=>OnValueChanged(e)" />
+
+@code {
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    private async Task OnValueChanged(ChangeEventArgs e)
+    {
+        Value = e.Value.ToString();
+        await ValueChanged.InvokeAsync(Value);
+    }
+}

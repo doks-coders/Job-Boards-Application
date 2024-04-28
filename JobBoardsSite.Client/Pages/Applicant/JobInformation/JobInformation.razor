@@ -1,4 +1,7 @@
 ﻿@page "/job-information"
+
+@inject IDialogService DialogService
+
 <MudContainer>
 
 	<MudGrid>
@@ -102,7 +105,7 @@
 
 			</MudList>
 
-			<MudButton Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Apply For Job</MudButton>
+			<MudButton @onclick="OpenDialog" Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Apply For Job</MudButton>
 		</MudItem>
 	</MudGrid>
 
@@ -110,3 +113,16 @@
 
 
 </MudContainer>
+
+
+@code {
+
+	private void OpenDialog()
+	{
+		var parameters = new DialogParameters<Dialog>();
+        parameters.Add(x => x.ContentText, "You have successfully applied");
+
+		var options = new DialogOptions { CloseOnEscapeKey = true, };
+		DialogService.Show<Dialog>("Job Application", parameters);
+	}
+}

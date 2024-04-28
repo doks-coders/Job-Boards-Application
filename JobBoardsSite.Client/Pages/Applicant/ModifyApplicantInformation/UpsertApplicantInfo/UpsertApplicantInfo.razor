@@ -1,4 +1,4 @@
-﻿@page "/upsert-job-applicant"
+﻿@page "/upsert-applicant"
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
@@ -19,27 +19,15 @@
 								  @bind-Value="model.Title" For="@(() => model.Title)" />
 
 
-					@foreach (var val in GetSelectedSkills())
-					{
-						<MudChip Variant="Variant.Outlined" OnClose="()=>RemoveCheckSkill(val.Name)" Color="Color.Primary">@val.Name</MudChip>
-					}
+					<MultiChipSelectComponent Skills="Javascript||Nodejs||Visual Studio||Python"
+											  Label="Select Skill"
+											  ValueChanged="(e)=>{model.SelectedSkills = e;}" />
 
 					
+					<SearchItem Label="Country" Value="@model.Country" SearchItems="Nigeria||Ghana||South America" ValueChanged="(e)=>{model.Country = e;}" />
 
-					<MudAutocomplete T="Skill" Label="Select Skill" @bind-Value="value1"
-									 SearchFunc="@SearchSkill" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
-						<ItemTemplate Context="e">
-							<MudCheckBox @onkeypress="()=>OnCheckSkill(e.Name)" @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
+					<SearchItem Label="City" Value="@model.City" SearchItems="Port Harcourt||Calabar||Lagos" ValueChanged="(e)=>{model.City = e;}" />
 
-						</ItemTemplate>
-					</MudAutocomplete>
-
-
-					<MudAutocomplete T="string" Label="Country" @bind-Value="model.Country"
-									 SearchFunc="@SearchCountries" />
-
-					<MudAutocomplete T="string" Label="Cities" @bind-Value="model.City"
-									 SearchFunc="@SearchCities" />
 
 					<MudTextField Lines="5" Label="About Yourself" Class="mt-3"
 								  @bind-Value="model.ShortBio" For="@(() => model.ShortBio)" />
@@ -47,7 +35,7 @@
 								  @bind-Value="model.AverageSalary" For="@(() => model.AverageSalary)" />
 
 				</MudCardContent>
-				
+
 				<div Class="pa-3">
 					<MudText Style="text-align:center;font-weight:bold">WORK EXPERIENCE</MudText>
 					@foreach (var work in workExp)
@@ -85,20 +73,11 @@
 @code {
 	RegisterAccountForm model = new RegisterAccountForm();
 	List<WorkExperience> workExp = new();
-	private Skill value1 = new() { Name = "" };
 	bool success;
 
 
 
-	public class Skill
-	{
-		public string Name { get; set; }
-		public bool Selected { get; set; } = false;
-	}
-	public List<Skill> skillList { get; set; } = new List<Skill>()
-	{
-		new (){Name="BootStrap"},new (){Name="Python"},new (){Name="Javascript"}
-	};
+
 
 	public List<string> Countries { get; set; } = new() { "Nigeria", "Ghana", "Benin" };
 	public List<string> Cities { get; set; } = new() { "Lagos", "Abuja", "Port Harcourt" };
@@ -139,6 +118,13 @@
 		[Required]
 		public string AverageSalary { get; set; }
 
+
+		[Required]
+		public string SelectedSkills { get; set; }
+
+		[Required]
+		public string TestItem { get; set; }
+
 		[Required]
 		public string City { get; set; }
 
@@ -149,32 +135,12 @@
 
 
 	private async Task<IEnumerable<string>> SearchCountries(string s)
-		=>  Countries.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
-	
+		=> Countries.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
+
 
 	private async Task<IEnumerable<string>> SearchCities(string s)
 		=> Cities.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
-	
 
-	/*This section is for skill search*/
-	private async Task<IEnumerable<Skill>> SearchSkill(string value)
-	=> skillList.Where(u => u.Name.ToLower().Contains(value.ToLower())).ToList();
-
-	
-	private List<Skill> GetSelectedSkills()
-	{
-		return skillList.Where(u => u.Selected == true).ToList();
-	}
-	private void OnCheckSkill(string value)
-	{
-		var skill = skillList.Where(u => u.Name == value).FirstOrDefault();
-		skill.Selected = !skill.Selected;
-	}
-	private void RemoveCheckSkill(string value)
-	{
-		var skill = skillList.Where(u => u.Name == value).FirstOrDefault();
-		skill.Selected = false;
-	}
 
 
 	private void AddWorkExperience()
