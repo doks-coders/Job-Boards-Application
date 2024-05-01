@@ -2,6 +2,12 @@
 
 <JobsSearchBar />
 
+@if (ClientAuthService.AuthenticationState.User.IsInRole("Applicant"))
+{
+	<div>
+		You are an Applicant Now
+	</div>
+}
 <!---->
 <p class="mt-4">We Found 853 jobs</p>
 

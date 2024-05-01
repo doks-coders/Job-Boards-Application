@@ -7,7 +7,7 @@
 	<MudAutocomplete T="ChipSelectItem" Label="@GetLength()"
 					 SearchFunc="@SearchItem" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
 		<ItemTemplate  Context="e">
-			<MudItem @onkeypress="()=>OnCheckItem(e.Name)">
+			<MudItem @onclick="()=>OnCheckItem(e.Name)">
 				<MudCheckBox  @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
 			</MudItem>
 	</ItemTemplate>

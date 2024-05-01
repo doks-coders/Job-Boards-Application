@@ -15,35 +15,16 @@
 					<MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
 								  @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
 				</MudCardContent>
-				<MudCardActions>
-					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+				<MudCardActions Class="justify-center d-flex mt-3">
+					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" >Login</MudButton>
 				</MudCardActions>
 			</MudCard>
+
+			<MudLink Href="sign-up">
+				<MudText Class="mt-3" Align="Align.Center">Go To Sign Up</MudText>
+			</MudLink>
+			
 		</MudItem>
 		
 	</MudGrid>
 </EditForm>
-@code {
-	RegisterAccountForm model = new RegisterAccountForm();
-	bool success;
-
-	public class RegisterAccountForm
-	{
-		[Required]
-		[EmailAddress]
-		public string Email { get; set; }
-
-		[Required]
-		[StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
-		public string Password { get; set; }
-
-	}
-
-	private void OnValidSubmit(EditContext context)
-	{
-		success = true;
-		StateHasChanged();
-
-	}
-
-}

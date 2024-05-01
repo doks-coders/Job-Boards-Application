@@ -1,5 +1,6 @@
 ﻿
 @inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 <MudThemeProvider Theme="Theme" />
 <MudDialogProvider FullWidth="true"
@@ -10,34 +11,36 @@
                    Position="DialogPosition.Center"
                    CloseOnEscapeKey="true" />
 
+
 <MudLayout>
     <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Style="cursor:pointer" @onclick="()=>GoToHomePage()">
+            Job Boards Application
+        </MudText>
         <MudSpacer />
-        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" >
-            <MudMenuItem>Profile</MudMenuItem>
+        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit">
+            <MudMenuItem OnClick="()=>GoToLink()">Profile</MudMenuItem>
             <MudMenuItem>My account</MudMenuItem>
-            <MudMenuItem>Logout</MudMenuItem>
+            <MudMenuItem OnClick="()=>GoToLoginPage()" >Logout</MudMenuItem>
         </MudMenu>
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h5" Class="mt-1">Application</MudText>
-        </MudDrawerHeader>
-        <NavMenu/>
-    </MudDrawer>
-    <MudMainContent >
+    <MudMainContent>
 
         <main class="pa-5">
             @Body
         </main>
     </MudMainContent>
 </MudLayout>
-@code {
-    bool _drawerOpen = true;
 
-    void DrawerToggle()
+@code{
+    public void GoToHomePage()
     {
-        _drawerOpen = !_drawerOpen;
+        NavigationManager.NavigateTo("/");
+    }
+    public void GoToLink(){
+        NavigationManager.NavigateTo("/applicant-information");
+    }
+    public void GoToLoginPage(){
+        NavigationManager.NavigateTo("/login");
     }
 }
