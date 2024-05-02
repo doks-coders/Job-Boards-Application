@@ -19,6 +19,7 @@ namespace JobBoardsSite.Infrastructure.Configurations
 				.IsRequired()
 				.OnDelete(DeleteBehavior.NoAction);
 
+
 		}
 	}
 }

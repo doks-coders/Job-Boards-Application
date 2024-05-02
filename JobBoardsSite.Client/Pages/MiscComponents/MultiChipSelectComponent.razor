@@ -1,23 +1,23 @@
 ﻿<div class="mt-3">
 	@foreach (var val in GetSelectedItems())
-{
-	<MudChip Variant="Variant.Outlined" OnClose="()=>RemoveCheckItem(val.Name)" Color="Color.Primary">@val.Name</MudChip>
-}
+	{
+		<MudChip Variant="Variant.Outlined" OnClose="()=>RemoveCheckItem(val.Name)" Color="Color.Primary">@val.Name</MudChip>
+	}
 
 	<MudAutocomplete T="ChipSelectItem" Label="@GetLength()"
-					 SearchFunc="@SearchItem" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+	SearchFunc="@SearchItem" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
 		<ItemTemplate  Context="e">
 			<MudItem @onclick="()=>OnCheckItem(e.Name)">
 				<MudCheckBox  @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
 			</MudItem>
-	</ItemTemplate>
-</MudAutocomplete>
+		</ItemTemplate>
+	</MudAutocomplete>
 </div>
 
 @code {
 
 	[Parameter]
-	public string Value { get; set; }
+	public string Value { get; set; } = "";
 
 	[Parameter]
 	public string Skills { get; set; }
@@ -36,7 +36,7 @@
 	{
 		if (!string.IsNullOrEmpty(Skills))
 		{
-			var skills = Skills.Split("||",StringSplitOptions.RemoveEmptyEntries);
+			var skills = Skills.Split("||", StringSplitOptions.RemoveEmptyEntries);
 			itemList = skills.Select(val => new ChipSelectItem() { Name = val }).ToList();
 		}
 		if (!string.IsNullOrEmpty(Value))
@@ -70,8 +70,10 @@
 	{
 		base.OnInitialized();
 	}
-	private async Task<IEnumerable<ChipSelectItem>> SearchItem(string value)
-	=> itemList.Where(u => u.Name.ToLower().Contains(value.ToLower())).ToList();
+	private async Task<IEnumerable<ChipSelectItem>> SearchItem(string value) {
+		if (value == "" || value == null) return itemList.ToList();
+		return itemList.Where(u => u.Name.ToLower().Contains(value.ToLower())).ToList();
+	}
 
 
 	private List<ChipSelectItem> GetSelectedItems()

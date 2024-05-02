@@ -11,9 +11,12 @@
 <!---->
 <p class="mt-4">We Found 853 jobs</p>
 
+@foreach (var job in JobList)
+{
+	<a href="/job-information" class="mt-3">
+		<JobsItem Job="job" />
+	</a>
+}
 
-<a href="/job-information">
-	<JobsItem />
-</a>
 
 

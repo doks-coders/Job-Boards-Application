@@ -53,6 +53,28 @@ namespace JobBoardsSite.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    About = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Responsiblities = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Qualifications = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SelectedSkills = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JobFunction = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobItems", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -120,6 +142,7 @@ namespace JobBoardsSite.Infrastructure.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     AppUserId = table.Column<int>(type: "int", nullable: false),
                     AppRoleId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -170,6 +193,30 @@ namespace JobBoardsSite.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RecruiterJobs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RecruiterId = table.Column<int>(type: "int", nullable: false),
+                    JobId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecruiterJobs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RecruiterJobs_AspNetUsers_RecruiterId",
+                        column: x => x.RecruiterId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_RecruiterJobs_JobItems_JobId",
+                        column: x => x.JobId,
+                        principalTable: "JobItems",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -218,6 +265,16 @@ namespace JobBoardsSite.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecruiterJobs_JobId",
+                table: "RecruiterJobs",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecruiterJobs_RecruiterId",
+                table: "RecruiterJobs",
+                column: "RecruiterId");
         }
 
         /// <inheritdoc />
@@ -239,10 +296,16 @@ namespace JobBoardsSite.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RecruiterJobs");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "JobItems");
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using JobBoardsSite.ApplicationCore.Services;
 using JobBoardsSite.ApplicationCore.Services.Interfaces;
 using JobBoardsSite.Infrastructure.Data;
+using JobBoardsSite.Infrastructure.Repositories;
+using JobBoardsSite.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobBoardsSite.Api.Extensions
@@ -9,9 +11,10 @@ namespace JobBoardsSite.Api.Extensions
     {
         static public IServiceCollection ConfigureAppServices(this IServiceCollection services,IConfiguration config)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAuthService, AuthService>();
 			services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IJobService, JobService>();
 			return services; 
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobBoardsSite.Infrastructure.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20240429223328_NewMigration")]
+    [Migration("20240501233706_NewMigration")]
     partial class NewMigration
     {
         /// <inheritdoc />
@@ -67,6 +67,9 @@ namespace JobBoardsSite.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
@@ -146,6 +149,80 @@ namespace JobBoardsSite.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("JobBoardsSite.Shared.Entities.JobItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JobFunction")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Qualifications")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Responsiblities")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Salary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SelectedSkills")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobItems");
+                });
+
+            modelBuilder.Entity("JobBoardsSite.Shared.Entities.RecruiterJob", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecruiterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("RecruiterId");
+
+                    b.ToTable("RecruiterJobs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -267,6 +344,25 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("JobBoardsSite.Shared.Entities.RecruiterJob", b =>
+                {
+                    b.HasOne("JobBoardsSite.Shared.Entities.JobItem", "JobItem")
+                        .WithMany("RecruiterJobs")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("JobBoardsSite.Shared.Entities.ApplicationUser", "Recruiter")
+                        .WithMany("RecruiterJobs")
+                        .HasForeignKey("RecruiterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("JobItem");
+
+                    b.Navigation("Recruiter");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("JobBoardsSite.Shared.Entities.AppRole", null)
@@ -310,7 +406,14 @@ namespace JobBoardsSite.Infrastructure.Migrations
 
             modelBuilder.Entity("JobBoardsSite.Shared.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("RecruiterJobs");
+
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("JobBoardsSite.Shared.Entities.JobItem", b =>
+                {
+                    b.Navigation("RecruiterJobs");
                 });
 #pragma warning restore 612, 618
         }

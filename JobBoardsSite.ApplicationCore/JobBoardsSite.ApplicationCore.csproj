@@ -15,10 +15,8 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
 	</ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JobBoardsSite.Infrastructure\JobBoardsSite.Infrastructure.csproj" />
     <ProjectReference Include="..\JobBoardsSite.Shared\JobBoardsSite.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

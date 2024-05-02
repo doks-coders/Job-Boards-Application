@@ -10,5 +10,7 @@ namespace JobBoardsSite.Shared.Entities
 	public class ApplicationUser:IdentityUser<int>
 	{
 		public ICollection<AppUserRole> UserRoles { get; set; }
+
+		public ICollection<RecruiterJob> RecruiterJobs { get; set; }
 	}
 }
