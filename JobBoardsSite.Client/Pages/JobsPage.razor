@@ -13,10 +13,10 @@
 
 @foreach (var job in JobList)
 {
-	<a href="/job-information" class="mt-3">
 		<JobsItem Job="job" />
-	</a>
+	
 }
-
-
+<div class="d-flex justify-center" >
+	<MudPagination Color="Color.Primary" Count="@_total" @bind-Selected="@_selected" @bind-Selected:after="RetrievePage" />
+</div>
 

@@ -33,6 +33,7 @@
 	private async Task<IEnumerable<string>> Search(string s)
 	{
 		await ValueChanged.InvokeAsync(s);
+		if (s == "" || s == null) return Items.ToList();
 		return Items.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
 	}
 

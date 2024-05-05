@@ -10,6 +10,9 @@ namespace JobBoardsSite.ApplicationCore.Services.Interfaces
 {
 	public interface IJobService
 	{
-		Task<ResponseModal> CreateJob(CreateJobRequest jobRequest);
+		Task<ResponseModal> CreateJob(CreateJobRequest jobRequest,int userId);
+		Task<ResponseModal> GetJobs();
+		Task<ResponseModal> GetJob(int id);
+		Task<ResponseModal> GetJobPagination(PaginationRequest request);
 	}
 }

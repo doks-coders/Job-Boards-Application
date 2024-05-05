@@ -51,7 +51,7 @@
 
             var user = new ClaimsPrincipal(identity);
 
-			var isRole = user.IsInRole("Applicant");
+		
 			return await Task.FromResult(new AuthenticationState(user));
         }
 

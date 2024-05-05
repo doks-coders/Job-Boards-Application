@@ -7,6 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Pages\JobSeeker\**" />
+	  <Content Remove="Pages\JobSeeker\**" />
+	  <EmbeddedResource Remove="Pages\JobSeeker\**" />
+	  <None Remove="Pages\JobSeeker\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="11.9.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.13" />
@@ -24,8 +31,6 @@
 
 	
 	<ItemGroup>
-		<Folder Include="Pages\JobSeeker\ViewJobs\" />
-		<Folder Include="Pages\Recruiter\RecruiterInformation\" />
 		<Folder Include="wwwroot\images\" />
 	</ItemGroup>
 

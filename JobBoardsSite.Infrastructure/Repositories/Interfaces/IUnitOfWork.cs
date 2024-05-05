@@ -9,6 +9,7 @@ namespace JobBoardsSite.Infrastructure.Repositories.Interfaces
 	public interface IUnitOfWork
 	{
 		IJobRepository Jobs { get; }
+		IAppUserRepository Users { get; }
 		Task<bool> SaveChanges();
 	}
 }

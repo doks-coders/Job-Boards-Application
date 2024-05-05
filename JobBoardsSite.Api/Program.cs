@@ -14,7 +14,15 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSett
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowSpecificOrigin",
+		builder => builder
+			.WithOrigins("https://localhost:7115")
+			.AllowAnyMethod()
+			.AllowAnyHeader()
+			.AllowCredentials());
+});
 var app = builder.Build();
 
 //Add-Migration NewMigration2 -Context ApplicationDbContext
@@ -29,12 +37,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+/*
 app.UseCors(policy =>
 policy.WithOrigins("https://localhost:7115", "http://localhost:7115").AllowAnyMethod().WithHeaders(HeaderNames.ContentType));
+*/
+app.UseCors(u => u.AllowAnyHeader().AllowAnyMethod()
+.AllowCredentials()
+.WithOrigins("https://localhost:7115", "http://localhost:7115"));
 
 app.UseMiddleware<ErrorMiddleware>();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

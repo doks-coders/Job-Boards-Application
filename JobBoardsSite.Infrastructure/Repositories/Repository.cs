@@ -1,5 +1,7 @@
 ﻿using JobBoardsSite.Infrastructure.Data;
 using JobBoardsSite.Infrastructure.Repositories.Interfaces;
+using JobBoardsSite.Shared.Requests;
+using JobBoardsSite.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,21 +20,49 @@ namespace JobBoardsSite.Infrastructure.Repositories
 			_db = db.Set<T>();
 		}
 
-		public async Task<T> GetOne(Expression<Func<T, bool>> query, string includeProperties)
+		public async Task<T> GetOne(Expression<Func<T, bool>> query, string? includeProperties=null)
 		{
 			var q = _db.AsQueryable();
 			q = IncludeFields(q, includeProperties);
 			return await q.FirstOrDefaultAsync(query);
 		}
 
-		public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> query, string includeProperties)
+
+		
+
+		public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> query, string? includeProperties=null)
 		{
 			var q = _db.AsQueryable();
 			q = IncludeFields(q, includeProperties);
 			return await q.Where(query).ToListAsync();
 		}
 
-		public async Task AddItem(T entity)
+		public async Task<PaginationResponse> GetPagination(PaginationRequest request, Expression<Func<T, bool>> query, string? includeProperties = null)
+		{
+			var totalNumber = await _db.Where(query).CountAsync();
+
+			var limit = request.PageLimit;
+			var page = request.PageNumber;
+			var skipValue = limit * (page - 1);
+
+
+			var totalPages = Math.Ceiling(totalNumber / (decimal)limit);
+
+
+			var q = _db.AsQueryable();
+			q = IncludeFields(q, includeProperties);
+			var pagedValues = q.Where(query).Skip(skipValue).Take(limit).ToList();
+
+			return new PaginationResponse()
+			{
+				Items = pagedValues,
+				PageNumber = page,
+				TotalPages = (int) totalPages
+			};
+
+		}
+
+			public async Task AddItem(T entity)
 		{
 			await _db.AddAsync(entity);
 		}

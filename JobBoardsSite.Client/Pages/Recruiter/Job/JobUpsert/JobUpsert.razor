@@ -20,20 +20,19 @@
 					<MudTextField Label="Salary" Class="mt-3"
 								  @bind-Value="model.Salary" For="@(() => model.Salary)" />
 
-					<MultiChipSelectComponent Value="Javascript"
+					<MultiChipSelectComponent 
 											  Skills="Javascript||Nodejs||Visual Studio||Python"
 											  Label="Skill"
 											  ValueChanged="(e)=>{model.SelectedSkills = e;}" />
 
 
 
+		
 					<MultiChipSelectComponent Skills="Remote||On-Site||Hybrid"
-											  Value="Remote"
 											  Label="Work Location"
 											  ValueChanged="(e)=>{model.WorkLocationType = e;}" />
 
 					<MultiChipSelectComponent Skills="Full Time||Part TIme||Contract"
-											  Value="Full Time"
 											  Label="Work Type"
 											  ValueChanged="(e)=>{model.WorkType = e;}" />
 
@@ -53,26 +52,20 @@
 					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save</MudButton>
 				</MudCardActions>
 			</MudCard>
+
+
+			<MudPaper Class="pa-4 mud-height-full">
+				
+				
+					<MudText Color="@Color.Error">
+						<ValidationSummary />
+					</MudText>
+				
+				
+			</MudPaper>
 		</MudItem>
 
 	</MudGrid>
 </EditForm>
 
-@code {
-	CreateJobRequest model = new CreateJobRequest();
 
-	bool success;
-
-	[Parameter]
-	public string FormType { get; set; } = "create";
-
-
-
-	private void OnValidSubmit(EditContext context)
-	{
-		success = true;
-		StateHasChanged();
-
-	}
-
-}

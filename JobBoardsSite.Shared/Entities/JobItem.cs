@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,10 @@ namespace JobBoardsSite.Shared.Entities
 {
 	public class JobItem:BaseEntity
 	{
+		public int RecruiterId { get; set; }
+
+		[ForeignKey(nameof(RecruiterId))]
+		public ApplicationUser Recruiter { get; set; }
 		
 		public string JobTitle { get; set; }
 

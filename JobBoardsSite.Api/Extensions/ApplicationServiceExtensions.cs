@@ -15,6 +15,8 @@ namespace JobBoardsSite.Api.Extensions
 			services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IJobService, JobService>();
+			services.AddScoped<IApplicantService, ApplicantService>();
+			services.AddScoped<IRecruiterService, RecruiterService>();
 			return services; 
         }
     }

@@ -33,7 +33,7 @@ namespace JobBoardsSite.ApplicationCore.Services
 			{
 				new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
 				new Claim(ClaimTypes.Email,user.Email),
-				new Claim(ClaimTypes.Role,"Applicant")
+				new Claim(ClaimTypes.Role,user.UserType)
 			};
 
 			var claimsIdentity = new ClaimsIdentity(Claims);
@@ -44,6 +44,7 @@ namespace JobBoardsSite.ApplicationCore.Services
 			{
 				SigningCredentials = signInCred,
 				Subject = claimsIdentity,
+				Expires = DateTime.Now.AddDays(7),
 				Audience = _options.Audience,
 				Issuer = _options.Issuer
 			};

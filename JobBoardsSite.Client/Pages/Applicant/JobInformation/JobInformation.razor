@@ -1,113 +1,79 @@
-﻿@page "/job-information"
-
-@inject IDialogService DialogService
+﻿@page "/job-information/{Id:int}"
 
 <MudContainer>
 
-	<MudGrid>
-		<MudItem md="7" sm="5">
-			<!------------------>
-			<MudText Typo="Typo.h5" Style="font-weight:bolder">Product Security Foundations</MudText>
-			<MudText Typo="Typo.caption">Microsoft</MudText>
+	@if (Job != null)
+	{
+		<MudGrid>
+			<MudItem md="7" sm="5">
+				<!------------------>
+				<MudText Typo="Typo.h5" Style="font-weight:bolder">@Job.JobTitle</MudText>
+				<MudText Typo="Typo.caption">Microsoft</MudText>
 
-			<div class="d-flex">
-				<MudText Typo="Typo.caption" Style="font-weight:lighter">Nigeria, Port Harcourt</MudText>
-				<MudText Typo="Typo.caption" Style="font-weight:lighter"> - 14 hrs ago</MudText>
-			</div>
+				<div class="d-flex">
+					<MudText Typo="Typo.caption" Style="font-weight:lighter">Nigeria, Port Harcourt</MudText>
+					<MudText Typo="Typo.caption" Style="font-weight:lighter"> - 14 hrs ago</MudText>
+				</div>
 
-			<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">About This Job</MudText>
+				<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">About This Job</MudText>
 
-			<MudText Typo="Typo.body2">
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-				Sunt necessitatibus eum quidem!
-				Consequatur nemo fugit quo.
-				Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-				maiores iusto autem.
-			</MudText>
+				<MudText Typo="Typo.body2">
+					@Job.About
+				</MudText>
 
-			<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Responsibilities</MudText>
-			<ul style="list-style-type:circle">
-				<li>
-					Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-					atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-				</li>
-				<li >
-					Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-				</li>
-				<li >
-					Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-				</li>
-			</ul>
+				<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Responsibilities</MudText>
+				<ListComponent InputValue="@Job.Responsiblities" />
 
 
-			<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Required Qualifications</MudText>
-			<ul style="list-style-type:circle">
-				<li>
-					Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-					atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-				</li>
-				<li >
-					Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-				</li>
-				<li>
-					Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-					maiores iusto autem.
-				</li>
-			</ul>
+				<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Required Qualifications</MudText>
+				<ListComponent InputValue="@Job.Qualifications" />
 
-			<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Skills</MudText>
+				<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Skills</MudText>
 
-			<div Class="d-flex align-center">
-				<MudChip  Variant="Variant.Outlined" Color="Color.Primary">React</MudChip>
-				<MudChip  Variant="Variant.Outlined" Color="Color.Primary">Java</MudChip>
-				<MudChip Variant="Variant.Outlined" Color="Color.Primary">Nodejs</MudChip>
-			</div>
-			<!------------------>
+				<div Class="d-flex align-center">
+					<ChipComponent InputValue="@Job.SelectedSkills" />
+				</div>
+				<!------------------>
 
 
-		</MudItem>
-		<MudItem md="5" sm="5">
-			<div class="d-flex">
-				<MudIcon Class="mr-2" Icon="@Icons.Material.Filled.Home"></MudIcon>
-				<MudText>Nigeria</MudText>
-			</div>
-			<MudText Typo="Typo.h5" Style="font-weight:bold" Class="mt-3">$135,700</MudText>
-			<MudText Typo="Typo.body1">Avg Salary</MudText>
+			</MudItem>
+			<MudItem md="5" sm="5">
+				<div class="d-flex">
+					<MudIcon Class="mr-2" Icon="@Icons.Material.Filled.Home"></MudIcon>
+					<MudText>Nigeria</MudText>
+				</div>
+				<MudText Typo="Typo.h5" Style="font-weight:bold" Class="mt-3">$ @Job.Salary</MudText>
+				<MudText Typo="Typo.body1">Avg Salary</MudText>
 
-			<MudList>
-				<MudListSubheader> Details</MudListSubheader>
-				<MudListItem Avatar="@Icons.Material.Filled.Work">
-					<MudText Typo="Typo.h6" Style="font-weight:bold">Software and Hardware</MudText>
-					<MudText Typo="Typo.body2">Industry</MudText>
-				</MudListItem>
+				<MudList>
+					<MudListSubheader> Details</MudListSubheader>
+					<MudListItem Avatar="@Icons.Material.Filled.Work">
+						<MudText Typo="Typo.h6" Style="font-weight:bold">Software and Hardware</MudText>
+						<MudText Typo="Typo.body2">Industry</MudText>
+					</MudListItem>
 
-				<MudListItem Avatar="@Icons.Material.Filled.Headphones">
-					<MudText Typo="Typo.h6" Style="font-weight:bold">Full Time</MudText>
-					<MudText Typo="Typo.body2">Employment Type</MudText>
-				</MudListItem>
+					<MudListItem Avatar="@Icons.Material.Filled.Headphones">
+						<ChipComponent InputValue="@Job.WorkType" />	
+						<MudText Typo="Typo.body2">Employment Type</MudText>
+					</MudListItem>
 
-				<MudListItem Avatar="@Icons.Material.Filled.VerifiedUser">
-					<MudText Typo="Typo.h6" Style="font-weight:bold">Information Technology</MudText>
-					<MudText Typo="Typo.body2">Job Function</MudText>
-				</MudListItem>
+					<MudListItem Avatar="@Icons.Material.Filled.VerifiedUser">
+						<MudText Typo="Typo.h6" Style="font-weight:bold">@Job.JobFunction</MudText>
+						<MudText Typo="Typo.body2">Job Function</MudText>
+					</MudListItem>
 
-				<MudListItem Avatar="@Icons.Material.Filled.Mail">
-					<MudText Typo="Typo.h6" Style="font-weight:bold">jobs@microsoft</MudText>
-					<MudText Typo="Typo.body2">Contact Email</MudText>
-				</MudListItem>
+					<MudListItem Avatar="@Icons.Material.Filled.Mail">
+						<MudText Typo="Typo.h6" Style="font-weight:bold">@Job.ContactEmail</MudText>
+						<MudText Typo="Typo.body2">Contact Email</MudText>
+					</MudListItem>
 
-			</MudList>
+				</MudList>
 
-			<MudButton @onclick="OpenDialog" Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Apply For Job</MudButton>
-		</MudItem>
-	</MudGrid>
+				<MudButton @onclick="OpenDialog" Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Apply For Job</MudButton>
+			</MudItem>
+		</MudGrid>
+	}
+
 
 
 
@@ -115,14 +81,3 @@
 </MudContainer>
 
 
-@code {
-
-	private void OpenDialog()
-	{
-		var parameters = new DialogParameters<Dialog>();
-        parameters.Add(x => x.ContentText, "You have successfully applied");
-
-		var options = new DialogOptions { CloseOnEscapeKey = true, };
-		DialogService.Show<Dialog>("Job Application", parameters);
-	}
-}

@@ -20,10 +20,10 @@
 
 
 					<MultiChipSelectComponent Skills="Javascript||Nodejs||Visual Studio||Python"
-											  Label="Select Skill"
+											  Label="Skill"
 											  ValueChanged="(e)=>{model.SelectedSkills = e;}" />
 
-					
+
 					<SearchItem Label="Country" Value="@model.Country" SearchItems="Nigeria||Ghana||South America" ValueChanged="(e)=>{model.Country = e;}" />
 
 					<SearchItem Label="City" Value="@model.City" SearchItems="Port Harcourt||Calabar||Lagos" ValueChanged="(e)=>{model.City = e;}" />
@@ -38,7 +38,7 @@
 
 				<div Class="pa-3">
 					<MudText Style="text-align:center;font-weight:bold">WORK EXPERIENCE</MudText>
-					@foreach (var work in workExp)
+					@foreach (var work in model.WorkExperiences)
 					{
 						<div Class="pa-3 mt-3">
 							<MudTextField Label="Company" Class="mt-3"
@@ -66,93 +66,17 @@
 					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save</MudButton>
 				</MudCardActions>
 			</MudCard>
+
+			<MudPaper Class="pa-4 mud-height-full">
+
+
+				<MudText Color="@Color.Error">
+					<ValidationSummary />
+				</MudText>
+
+
+			</MudPaper>
 		</MudItem>
 
 	</MudGrid>
 </EditForm>
-@code {
-	RegisterAccountForm model = new RegisterAccountForm();
-	List<WorkExperience> workExp = new();
-	bool success;
-
-
-
-
-
-	public List<string> Countries { get; set; } = new() { "Nigeria", "Ghana", "Benin" };
-	public List<string> Cities { get; set; } = new() { "Lagos", "Abuja", "Port Harcourt" };
-
-	public class WorkExperience
-	{
-		[Required]
-		public string Location { get; set; }
-
-		[Required]
-		public string Company { get; set; }
-
-		[Required]
-		public string Title { get; set; }
-		[Required]
-		public string Duration { get; set; }
-		[Required]
-		public string Summary { get; set; }
-
-	}
-
-
-	public class RegisterAccountForm
-	{
-		[Required]
-		public string Name { get; set; }
-
-		[Required]
-		[Phone]
-		public string PhoneNumber { get; set; }
-
-		[Required]
-		public string Title { get; set; }
-
-		[Required]
-		public string Country { get; set; }
-
-		[Required]
-		public string AverageSalary { get; set; }
-
-
-		[Required]
-		public string SelectedSkills { get; set; }
-
-		[Required]
-		public string TestItem { get; set; }
-
-		[Required]
-		public string City { get; set; }
-
-		[Required]
-		public string ShortBio { get; set; }
-
-	}
-
-
-	private async Task<IEnumerable<string>> SearchCountries(string s)
-		=> Countries.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
-
-
-	private async Task<IEnumerable<string>> SearchCities(string s)
-		=> Cities.Where(u => u.ToLower().Contains(s.ToLower())).ToList();
-
-
-
-	private void AddWorkExperience()
-	{
-		workExp.Add(new());
-	}
-
-	private void OnValidSubmit(EditContext context)
-	{
-		success = true;
-		StateHasChanged();
-
-	}
-
-}

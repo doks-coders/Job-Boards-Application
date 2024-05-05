@@ -1,4 +1,5 @@
 ﻿using JobBoardsSite.Client.Services.Interfaces;
+using JobBoardsSite.Shared.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -23,19 +24,19 @@ namespace JobBoardsSite.Client.Pages.Authentication.Signup
 		public class RegisterAccountForm
 		{
 			[Required]
-			public string Name { get; set; }
-
-			[Required]
 			[EmailAddress]
 			public string Email { get; set; }
 
 			[Required]
+			public string UserType { get; set; }
+
+			[Required]
 			[StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
-			public string Password { get; set; }
+			public string Password { get; set; } = "Password1234&";
 
 			[Required]
 			[Compare(nameof(Password))]
-			public string Verify { get; set; }
+			public string Verify { get; set; } = "Password1234&";
 
 		}
 
@@ -44,12 +45,20 @@ namespace JobBoardsSite.Client.Pages.Authentication.Signup
 			success = true;
 			StateHasChanged();
 
-			var authResponse = await ClientAuthService.Register(new(model.Name,model.Email,model.Password,model.Verify));
+			var authResponse = await ClientAuthService.Register(new(model.Email,model.UserType,model.Password,model.Verify));
 			var res =  await ClientAuthService.SignInUser(authResponse);
 
 			ClientAuthService.RaiseEventAuthenticationStateChanged(res);
 			//var isAuthenticated = res.User.Identity.IsAuthenticated;
-			NavigationManager.NavigateTo("/");
+			if (model.UserType == RoleConstants.Applicant)
+			{
+				NavigationManager.NavigateTo("/create-applicant-info");
+			}
+			if (model.UserType == RoleConstants.Recruiter)
+			{
+				NavigationManager.NavigateTo("/create-recruiter-information");
+			}
+
 
 
 

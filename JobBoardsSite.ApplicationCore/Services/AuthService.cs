@@ -32,7 +32,9 @@ namespace JobBoardsSite.ApplicationCore.Services
 			var user = new ApplicationUser()
 			{
 				Email = userRequest.Email,
-				UserName = userRequest.Email
+				UserName = userRequest.Email,
+				UserType = userRequest.UserType
+
 			};
 			var res = await _userManager.CreateAsync(user, userRequest.Password);
 			if (!res.Succeeded) throw new CustomException(res.Errors.Select(e => e.Description).ToArray());

@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+
+
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+	<DataAnnotationsValidator />
+	<MudGrid Class="d-flex justify-center">
+		<MudItem xs="12" sm="7">
+			<MudCard>
+
+				<MudCardContent>
+					<MudTextField Label="Company Name" Class="mt-3"
+								  @bind-Value="model.Name" For="@(() => model.Name)" />
+
+
+					<SearchItem Label="Industry" Value="@model.Industry" SearchItems="Software and Hardware||Financial Services||Business Administration" ValueChanged="(e)=>{model.Industry = e;}" />
+
+					<MudTextField Label="About" Class="mt-3"
+								  @bind-Value="model.About" Lines="3" For="@(() => model.About)" />
+
+					<SearchItem Label="Country" Value="@model.Country" SearchItems="Nigeria||Ghana||South America" ValueChanged="(e)=>{model.Country = e;}" />
+
+					<SearchItem Label="City" Value="@model.City" SearchItems="Port Harcourt||Calabar||Lagos" ValueChanged="(e)=>{model.City = e;}" />
+
+
+					<MudTextField Label="Contact Email" Class="mt-3" 
+								  @bind-Value="model.PhoneNumber" For="@(() => model.PhoneNumber)" />
+
+				</MudCardContent>
+
+				
+				<MudCardActions>
+					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save</MudButton>
+				</MudCardActions>
+			</MudCard>
+
+
+			<MudPaper Class="pa-4 mud-height-full">
+				
+				
+					<MudText Color="@Color.Error">
+						<ValidationSummary />
+					</MudText>
+				
+				
+			</MudPaper>
+		</MudItem>
+
+	</MudGrid>
+</EditForm>
+
+
+

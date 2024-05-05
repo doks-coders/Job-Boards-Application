@@ -26,7 +26,7 @@ namespace JobBoardsSite.Infrastructure.Data
 
 		public DbSet<JobItem> JobItems { get; set; }
 		public DbSet<RecruiterJob> RecruiterJobs { get; set; }
-
+		public DbSet<ApplicantJobApplication> ApplicantJobApplications { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{

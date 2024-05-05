@@ -4,26 +4,39 @@
 @using Microsoft.AspNetCore.Components.Forms
 
 <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
-<DataAnnotationsValidator/>
-    <MudText Class="mb-2" Align="Align.Center">Sign Up</MudText>
-<MudGrid Class="d-flex justify-center">
-    <MudItem xs="12" sm="7">
-        <MudCard>
-            <MudCardContent>
-                <MudTextField Label="First name" HelperText="Max. 8 characters"
-                              @bind-Value="model.Name" For="@(() => model.Name)"/>
-                <MudTextField Label="Email" Class="mt-3"
-                              @bind-Value="model.Email" For="@(() => model.Email)"/>
-                <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
-                              @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
-                <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
-                                  @bind-Value="model.Verify" For="@(() => model.Verify)" InputType="InputType.Password" />
-            </MudCardContent>
-                <MudCardActions Class="justify-center d-flex mt-3">
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
-                </MudCardActions>
-        </MudCard>
-    </MudItem>
+	<DataAnnotationsValidator />
+	<MudText Class="mb-2" Align="Align.Center">Sign Up</MudText>
+	<MudGrid Class="d-flex justify-center">
+		<MudItem xs="12" sm="7">
+			<MudCard>
+				<MudCardContent>
+					<MudTextField Label="Email" Class="mt-3"
+								  @bind-Value="model.Email" For="@(() => model.Email)" />
 
-</MudGrid>
+					<MudSelect T="string" Label="Role" @bind-Value="model.UserType" AnchorOrigin="Origin.BottomCenter">
+						<MudSelectItem Value="@(RoleConstants.Applicant)" />
+						<MudSelectItem Value="@(RoleConstants.Recruiter)" />
+					</MudSelect>
+					<MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+								  @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
+					<MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+								  @bind-Value="model.Verify" For="@(() => model.Verify)" InputType="InputType.Password" />
+				</MudCardContent>
+				<MudCardActions Class="justify-center d-flex mt-3">
+					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+				</MudCardActions>
+			</MudCard>
+			<MudPaper Class="pa-4 mud-height-full">
+
+
+				<MudText Color="@Color.Error">
+					<ValidationSummary />
+				</MudText>
+
+
+			</MudPaper>
+
+		</MudItem>
+
+	</MudGrid>
 </EditForm>

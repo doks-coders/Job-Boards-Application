@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobBoardsSite.Infrastructure.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20240501233706_NewMigration")]
-    partial class NewMigration
+    [Migration("20240505193654_Migration1")]
+    partial class Migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,11 +91,23 @@ namespace JobBoardsSite.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("About")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("AverageSalary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -105,11 +117,17 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Industry")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -128,7 +146,19 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("ProfileCompleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SelectedSkills")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortBio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -137,6 +167,9 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -182,6 +215,9 @@ namespace JobBoardsSite.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RecruiterId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Responsiblities")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -197,7 +233,17 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("WorkLocationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RecruiterId");
 
                     b.ToTable("JobItems");
                 });
@@ -342,6 +388,17 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.Navigation("AppRole");
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("JobBoardsSite.Shared.Entities.JobItem", b =>
+                {
+                    b.HasOne("JobBoardsSite.Shared.Entities.ApplicationUser", "Recruiter")
+                        .WithMany()
+                        .HasForeignKey("RecruiterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Recruiter");
                 });
 
             modelBuilder.Entity("JobBoardsSite.Shared.Entities.RecruiterJob", b =>

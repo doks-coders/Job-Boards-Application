@@ -36,8 +36,10 @@ namespace JobBoardsSite.Client.Pages.Authentication.Login
 
 			var authResponse = await ClientAuthService.Login(new LoginUserRequest(model.Email, model.Password));
 
+
 			var res =  await ClientAuthService.SignInUser(authResponse);
 
+			var i = res.User.IsInRole("Applicant");
 			ClientAuthService.RaiseEventAuthenticationStateChanged(res);
 
 			StateHasChanged();

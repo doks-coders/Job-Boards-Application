@@ -1,0 +1,27 @@
+﻿<ul style="list-style-type:circle">
+	@foreach (var item in Values)
+	{
+
+		<MudChip Variant="Variant.Outlined" Color="Color.Primary">@item</MudChip>
+	}
+
+
+</ul>
+@code {
+	[Parameter]
+	public string InputValue { get; set; }
+
+	List<string> Values { get; set; } = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		Values = ConvertStringToList(InputValue);
+	}
+
+	private List<string> ConvertStringToList(string item)
+	{
+		string[] values = item.Split("||", StringSplitOptions.RemoveEmptyEntries);
+		return values.ToList();
+	}
+
+}

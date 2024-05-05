@@ -8,6 +8,8 @@ namespace JobBoardsSite.Shared.Responses
 {
 	public class JobListItemResponse
 	{
+		public int Id { get; set; }
+
 		public string CompanyName { get; set; }
 
 		public string CompanyImageUrl { get; set; }

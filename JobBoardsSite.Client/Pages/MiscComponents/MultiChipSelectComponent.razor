@@ -4,11 +4,11 @@
 		<MudChip Variant="Variant.Outlined" OnClose="()=>RemoveCheckItem(val.Name)" Color="Color.Primary">@val.Name</MudChip>
 	}
 
-	<MudAutocomplete T="ChipSelectItem" Label="@GetLength()"
+	<MudAutocomplete T="ChipSelectItem" @bind-Value="value"  Label="@GetLength()"
 	SearchFunc="@SearchItem" ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
 		<ItemTemplate  Context="e">
-			<MudItem @onclick="()=>OnCheckItem(e.Name)">
-				<MudCheckBox  @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
+			<MudItem >
+				<MudCheckBox @bind-Value:after="OnCheckItem"  @bind-Value="e.Selected" Label="@e.Name"></MudCheckBox>
 			</MudItem>
 		</ItemTemplate>
 	</MudAutocomplete>
@@ -76,21 +76,20 @@
 	}
 
 
+
 	private List<ChipSelectItem> GetSelectedItems()
 	{
 		return itemList.Where(u => u.Selected == true).ToList();
 	}
-	private async Task OnCheckItem(string value)
+	private async Task OnCheckItem()
 	{
-		Value = "";
-		var item = itemList.Where(u => u.Name == value).FirstOrDefault();
-		item.Selected = !item.Selected;
 	
 		await ValueChanged.InvokeAsync(GetStringOfSelectedItems());
 	}
-	private async Task RemoveCheckItem(string value)
+	private async Task RemoveCheckItem(string predicate)
 	{
-		var item = itemList.Where(u => u.Name == value).FirstOrDefault();
+		
+		var item = itemList.Where(u => u.Name == predicate).FirstOrDefault();
 		item.Selected = false;
 		await ValueChanged.InvokeAsync(GetStringOfSelectedItems());
 	}
