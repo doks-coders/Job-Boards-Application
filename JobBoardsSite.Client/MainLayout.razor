@@ -19,9 +19,16 @@
         </MudText>
         <MudSpacer />
         <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit">
-            <MudMenuItem OnClick="()=>GoToLink()">Profile</MudMenuItem>
-            <MudMenuItem>My account</MudMenuItem>
-            <MudMenuItem Href="/recruiter-admin-homepage">Admin Homepage</MudMenuItem>
+
+            @if (ClientAuthService.AuthenticationState.User.IsInRole(RoleConstants.Admin))
+            {
+                <MudMenuItem Href="/recruiter-admin-homepage">Admin Homepage</MudMenuItem>
+            }
+            else
+            {
+                <MudMenuItem OnClick="()=>GoToLink()">Profile</MudMenuItem>
+            }
+          
             <MudMenuItem OnClick="()=>GoToLoginPage()" >Logout</MudMenuItem>
 
             
@@ -41,7 +48,7 @@
         NavigationManager.NavigateTo("/");
     }
     public void GoToLink(){
-        NavigationManager.NavigateTo("/applicant-information");
+        NavigationManager.NavigateTo("/applicant-information/0");
     }
     public void GoToLoginPage(){
         NavigationManager.NavigateTo("/login");

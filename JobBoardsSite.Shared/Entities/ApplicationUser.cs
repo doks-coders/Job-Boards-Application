@@ -36,6 +36,7 @@ namespace JobBoardsSite.Shared.Entities
 		public string? SelectedSkills { get; set; }
 
 		public string? ShortBio { get; set; }
+		public string? WorkExperiences { get; set; }
 
 		public ICollection<AppUserRole> UserRoles { get; set; }
 

@@ -12,12 +12,14 @@ namespace JobBoardsSite.Infrastructure.Repositories
 	{
 		public IJobRepository Jobs { get; }
 		public IAppUserRepository Users { get; }
+		public IApplicantJobApplicationRepository ApplicantJobApplications { get; }
 
 		private readonly AppIdentityDbContext _db;
 		public UnitOfWork(AppIdentityDbContext db)
 		{
 			Jobs = new JobRepository(db);
 			Users = new AppUserRepository(db);
+			ApplicantJobApplications = new ApplicantJobApplicationRepository(db);
 			_db = db;
 		}
 

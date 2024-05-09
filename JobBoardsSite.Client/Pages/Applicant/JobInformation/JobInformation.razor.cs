@@ -18,9 +18,13 @@ namespace JobBoardsSite.Client.Pages.Applicant.JobInformation
 
 
         [Inject]
-        IJobService JobService { get; set; }
+        IClientJobService JobService { get; set; }
 
-        public JobItemResponse? Job { get; set; }
+
+		[Inject]
+		IClientApplicantService ApplicantService { get; set; }
+
+		public JobItemResponse? Job { get; set; }
 
 
 		protected override async Task OnInitializedAsync()
@@ -63,10 +67,11 @@ namespace JobBoardsSite.Client.Pages.Applicant.JobInformation
 		}
 
 
-		protected void OpenDialog()
+		protected async Task ApplyToJob()
 		{
+			var res = await ApplicantService.JobApply(Job.Id);
 			var parameters = new DialogParameters<JobAppliedDialog>();
-			parameters.Add(x => x.ContentText, "You have successfully applied");
+			parameters.Add(x => x.ContentText, res.Message);
 
 			var options = new DialogOptions { CloseOnEscapeKey = true, };
 			DialogService.Show<JobAppliedDialog>("Job Application", parameters);

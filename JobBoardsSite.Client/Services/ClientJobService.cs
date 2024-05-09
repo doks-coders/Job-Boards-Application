@@ -8,12 +8,12 @@ using System.Net;
 
 namespace JobBoardsSite.Client.Services
 {
-	public class JobService : IJobService
+	public class ClientJobService : IClientJobService
 	{
 		private readonly IBaseService _baseService;
 
 
-		public JobService(IBaseService baseService)
+		public ClientJobService(IBaseService baseService)
 		{
 			_baseService = baseService;
 		}
@@ -88,7 +88,7 @@ namespace JobBoardsSite.Client.Services
 			var response = await _baseService.SendRequest(new()
 			{
 				Method = ApiVerbs.GET,
-				Url = $"api/Job/get-all-query?PageNumber={request.PageNumber}&PageLimit={request.PageLimit}"
+				Url = $"api/Job/get-all-query?PageNumber={request.PageNumber}&PageLimit={request.PageLimit}&WorkType={request.WorkType}&Country={request.Country}&Skills={request.Skills}"
 
 			});
 			if (response.isSuccess)

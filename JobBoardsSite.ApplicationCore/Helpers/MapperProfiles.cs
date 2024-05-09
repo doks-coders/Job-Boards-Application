@@ -25,7 +25,10 @@ namespace JobBoardsSite.ApplicationCore.Helpers
 
 		public partial ApplicationUser UserToUser(ApplicationUser user);
 
+		public partial ApplicantResponse ApplicationUserToApplicantResponse(ApplicationUser user);
+		public partial RecruiterResponse ApplicationUserToRecruiterResponse(ApplicationUser user);
 
+		public partial List<ApplicantListItem> ApplicationUserToApplicantItemResponse(List<ApplicationUser> users);
 
 	}
 }

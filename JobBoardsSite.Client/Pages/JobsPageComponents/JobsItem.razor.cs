@@ -15,7 +15,13 @@ namespace JobBoardsSite.Client.Pages.JobsPageComponents
         List<string> SelectedSkills = new();
         List<string> WorkLocationType = new();
 
-        protected override async Task OnInitializedAsync()
+		protected override async Task OnParametersSetAsync()
+		{
+			SelectedSkills = ConvertStringToList(Job.SelectedSkills);
+			WorkLocationType = ConvertStringToList(Job.WorkLocationType);
+		}
+
+		protected override async Task OnInitializedAsync()
         {
             
             SelectedSkills = ConvertStringToList(Job.SelectedSkills);

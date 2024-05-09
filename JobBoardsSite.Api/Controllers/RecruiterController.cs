@@ -20,7 +20,24 @@ namespace JobBoardsSite.Api.Controllers
 		public async Task<ResponseModal> CreateRecruiterInfo([FromBody] RecruiterProfileRequest request)
 		=> await _recruiterService.UpdateRecruiter(User.GetUserId(), request);
 
-		
+
+		[HttpGet("get-my-recruiter-info")]
+		public async Task<ResponseModal> GetMyRecruiterInfo()
+		=> await _recruiterService.GetMyRecruiterInfo(User.GetUserId());
+
+		[HttpGet("get-recruiter-info/{id:int}")]
+		public async Task<ResponseModal> GetRecruiterInfo(int id)
+		=> await _recruiterService.GetRecruiterInfo(User.GetUserId(), id);
+
+		[HttpGet("get-applicant-table")]
+		public async Task<ResponseModal> GetApplicantsTable()
+		=> await _recruiterService.GetMyApplicants(User.GetUserId());
+
+		[HttpGet("get-jobs-table")]
+		public async Task<ResponseModal> GetJobsTable()
+		=> await _recruiterService.GetMyJobs(User.GetUserId());
+
+
 
 	}
 }

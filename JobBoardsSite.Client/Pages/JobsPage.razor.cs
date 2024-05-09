@@ -1,6 +1,8 @@
 ﻿using JobBoardsSite.Client.Services.Interfaces;
+using JobBoardsSite.Shared.Constants;
 using JobBoardsSite.Shared.Responses;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using Newtonsoft.Json.Linq;
 
 namespace JobBoardsSite.Client.Pages
@@ -8,20 +10,33 @@ namespace JobBoardsSite.Client.Pages
 	public partial class JobsPage
 	{
 		[Inject]
+		private NavigationManager NavigationManager { get; set; }
+
+		[Inject]
 		public IClientAuthService ClientAuthService { get; set; }
 
 		[Inject]
-		public IJobService JobService { get; set; }
+		public IClientJobService JobService { get; set; }
 
 		public List<JobListItemResponse> JobList { get; set; } = new();
 
-		private int _selected = 1;
+		private string Country { get; set; } = "";
+		public string SelectedSkills { get; set; } = "";
+		public string WorkType { get; set; } = "";
 
+		private int _selected = 1;
 		private int _total = 4;
 
+		
 		protected async Task RetrievePage()
 		{
-			var value = await JobService.GetJobsPagination(new() { PageNumber = _selected });
+			
+			var value = await JobService.GetJobsPagination(new() { 
+				PageNumber = _selected,
+				Skills = string.IsNullOrEmpty(SelectedSkills) ? "All" : SelectedSkills,
+				Country = string.IsNullOrEmpty(Country) ? "All" : Country,
+				WorkType = string.IsNullOrEmpty(WorkType) ? "All" : WorkType,
+			});
 
 			_total = value.TotalPages;
 			_selected = value.PageNumber;
@@ -34,28 +49,7 @@ namespace JobBoardsSite.Client.Pages
 		protected override async Task OnInitializedAsync()
 		{
 			await RetrievePage();
-
-			//JobList = await JobService.GetJobs();
-
-			
-			/*
-			JobList = new()
-			{
-				new JobListItemResponse()
-				{
-					CompanyImageUrl="",
-					CompanyName="Daniel Company",
-					JobTitle="Backend Developer",
-					SelectedSkills="Javascript||HTML||CSS||Python",
-					WorkLocationType="Remote||Onsite",
-					Salary="1000"
-
-				}
-			};
-			*/
 		}
-
-
 
 	}
 }

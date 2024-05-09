@@ -9,6 +9,7 @@ using JobBoardsSite.Shared.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace JobBoardsSite.ApplicationCore.Services
 
 
 
-		public async Task<ResponseModal> CreateJob(CreateJobRequest jobRequest,int userId)
+		public async Task<ResponseModal> CreateJob(CreateJobRequest jobRequest, int userId)
 		{
 			var job = _mapper.JobRequestToJob(jobRequest);
 			job.RecruiterId = userId;
@@ -40,7 +41,7 @@ namespace JobBoardsSite.ApplicationCore.Services
 
 		}
 
-		
+
 
 		public async Task<ResponseModal> GetJobs()
 		{
@@ -69,18 +70,30 @@ namespace JobBoardsSite.ApplicationCore.Services
 			};
 		}
 
+		private Expression<Func<JobItem, bool>> Search(PaginationRequest request)
+		{
+			return u =>
+			(string.IsNullOrEmpty(request.Country) || request.Country == "All" || u.Recruiter.Country == request.Country)
+			&&
+			(string.IsNullOrEmpty(request.WorkType) || request.WorkType == "All" || u.WorkType.Contains(request.WorkType))
+			&& 
+			(string.IsNullOrEmpty(request.Skills) || request.Skills == "All" || u.SelectedSkills.Contains(request.Skills));
+		}
+
+
 		public async Task<ResponseModal> GetJobPagination(PaginationRequest request)
 		{
-			var response = await _unitOfwork.Jobs.GetPagination(request, u => u.Id != null,includeProperties: "Recruiter");
+			var response = await _unitOfwork.Jobs.GetPagination(request, Search(request), includeProperties: "Recruiter");
 
 			var jobitems = response.Items as List<JobItem>;
-			var jobsResponses = jobitems.Select(e => new JobListItemResponse() { 
-				CompanyName=e.Recruiter.Name,
-				Id=e.Id,
-				JobTitle=e.JobTitle,
+			var jobsResponses = jobitems.Select(e => new JobListItemResponse()
+			{
+				CompanyName = e.Recruiter.Name,
+				Id = e.Id,
+				JobTitle = e.JobTitle,
 				Salary = e.Salary,
 				SelectedSkills = e.SelectedSkills,
-				WorkLocationType=e.WorkLocationType,
+				WorkLocationType = e.WorkLocationType,
 
 			}).ToList();
 			//var jobsResponses = _mapper.JobsToJobListItemResponse(jobitems);

@@ -18,7 +18,7 @@ builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<IClientAuthService, ClientAuthService>();
 builder.Services.AddScoped<IClientRecruiterService, ClientRecruiterService>();
 builder.Services.AddScoped<IClientApplicantService, ClientApplicantService>();
-builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<IClientJobService, ClientJobService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IManageLocalStorage, ManageLocalStorage>();
 builder.Services.AddBlazoredLocalStorage();

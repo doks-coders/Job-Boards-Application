@@ -102,6 +102,13 @@ namespace JobBoardsSite.Shared.Models
 						{ "Message", "Database Error" }
 					}
 				},
+				{
+					ErrorCodes.UserDoesntExist,new (){
+
+						{ "Code", Convert.ToString((int) HttpStatusCode.NotFound) },
+						{ "Message", "User does not exist" }
+					}
+				},
 			};
 
 

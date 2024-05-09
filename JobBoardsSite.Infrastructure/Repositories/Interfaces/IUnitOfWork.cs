@@ -10,6 +10,7 @@ namespace JobBoardsSite.Infrastructure.Repositories.Interfaces
 	{
 		IJobRepository Jobs { get; }
 		IAppUserRepository Users { get; }
+		IApplicantJobApplicationRepository ApplicantJobApplications { get; }
 		Task<bool> SaveChanges();
 	}
 }

@@ -1,86 +1,97 @@
-﻿@page "/applicant-information"
-<MudContainer>
+﻿@page "/applicant-information/{Id:int}"
 
-	<MudGrid>
-		<MudItem md="7" sm="5">
-			<!------------------>
-			<MudText Typo="Typo.h5" Style="font-weight:bolder">Daniel Odokuma</MudText>
-			<MudText Typo="Typo.caption">UI/UX Designer</MudText>
+@if (Applicant != null)
+{
+	<MudContainer>
 
-			<div class="d-flex">
-				<MudText Typo="Typo.caption" Style="font-weight:lighter">Nigeria, Port Harcourt</MudText>
-			</div>
+		<MudGrid>
+			<MudItem md="7" sm="5">
+				<!------------------>
+				<MudText Typo="Typo.h5" Style="font-weight:bolder">@Applicant.Name</MudText>
+					<MudText Typo="Typo.caption">@Applicant.Title</MudText>
 
-			<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Short Bio</MudText>
-
-			<MudText Typo="Typo.body2">
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-				Sunt necessitatibus eum quidem!
-				Consequatur nemo fugit quo.
-				Iure veritatis saepe repudiandae! Consequuntur atque, vitae eveniet magnam quam saepe
-				maiores iusto autem.
-			</MudText>
-
-		
-			<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Skills</MudText>
-
-			<div Class="d-flex align-center">
-				<MudChip Variant="Variant.Outlined" Color="Color.Primary">React</MudChip>
-				<MudChip Variant="Variant.Outlined" Color="Color.Primary">Java</MudChip>
-				<MudChip Variant="Variant.Outlined" Color="Color.Primary">Nodejs</MudChip>
-			</div>
-
-			<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Work Experience</MudText>
-
-			<div class="d-flex">
-				<div class="mr-3">
-					<MudIcon Size="Size.Large"  Icon="@Icons.Material.Filled.Work"></MudIcon>
-				</div>
-				<div style="width:80%">
-					<MudText Style="font-weight:bolder">Crisis Intervention Specialist</MudText>
-					<div class="justify-content-between">
-						<MudText>London - Dribble Inc</MudText>
-						<MudText>2018 - Present</MudText>
+					<div class="d-flex">
+						<MudText Typo="Typo.caption" Style="font-weight:lighter">@Applicant.Country , @Applicant.City</MudText>
 					</div>
+
+					<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Short Bio</MudText>
+
 					<MudText Typo="Typo.body2">
-						Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-						Sunt necessitatibus eum quidem!
-						Consequatur nemo fugit quo.
-					</MudText>
+						@Applicant.ShortBio
+				</MudText>
+
+
+				<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Skills</MudText>
+
+				<div Class="d-flex align-center">
+					<ChipComponent InputValue="@Applicant.SelectedSkills" />
 				</div>
-			</div>
 
-			<!------------------>
+				<MudText Typo="Typo.h6" Class="mt-5" Style="font-weight:bolder">Work Experience</MudText>
 
+				@if (WorkExperiences != null)
+				{
+					@foreach (var item in WorkExperiences)
+					{
+						<div class="d-flex mt-3">
+							<div class="mr-3">
+								<MudIcon Size="Size.Large" Icon="@Icons.Material.Filled.Work"></MudIcon>
+							</div>
+							<div style="width:80%">
+								<MudText Style="font-weight:bolder">@item.Title</MudText>
+									<div class="justify-content-between">
+										<MudText>@item.Location - @item.Company</MudText>
+										<MudText>@item.Duration</MudText>
+									</div>
+									<MudText Typo="Typo.body2">
+										@item.Summary
+								</MudText>
+							</div>
+						</div>
+					}
 
-		</MudItem>
-		<MudItem md="5" sm="5">
-			<div class="d-flex">
-				<MudIcon Class="mr-2" Icon="@Icons.Material.Filled.Home"></MudIcon>
-				<MudText>Nigeria</MudText>
-			</div>
-			<MudText Typo="Typo.h5" Style="font-weight:bold" Class="mt-3">$135,700</MudText>
-			<MudText Typo="Typo.body1">Avg Salary</MudText>
-
-			<MudList>
-				<MudListItem Avatar="@Icons.Material.Filled.Mail">
-					<MudText Typo="Typo.h6" Style="font-weight:bold">guonnie@gmail.com</MudText>
-					<MudText Typo="Typo.body2">Contact Email</MudText>
-				</MudListItem>
-
-				<MudListItem Avatar="@Icons.Material.Filled.Headphones">
-					<MudText Typo="Typo.h6" Style="font-weight:bold">+64 567 898 898</MudText>
-					<MudText Typo="Typo.body2">Phone</MudText>
-				</MudListItem>
-			</MudList>
-
-			<!--<MudButton Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Contact</MudButton>-->
-			<MudButton Href="upsert-applicant" Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Edit Information</MudButton>
-
-		</MudItem>
-	</MudGrid>
+				}
 
 
+				<!------------------>
 
 
-</MudContainer>
+			</MudItem>
+			<MudItem md="5" sm="5">
+				<div class="d-flex">
+					<MudIcon Class="mr-2" Icon="@Icons.Material.Filled.Home"></MudIcon>
+					<MudText>@Applicant.Country</MudText>
+					</div>
+					<MudText Typo="Typo.h5" Style="font-weight:bold" Class="mt-3"> @Applicant.AverageSalary </MudText>
+					<MudText Typo="Typo.body1">Avg Salary</MudText>
+
+					<MudList>
+						<MudListItem Avatar="@Icons.Material.Filled.Mail">
+							<MudText Typo="Typo.h6" Style="font-weight:bold"> @Applicant.Email </MudText>
+							<MudText Typo="Typo.body2">Contact Email</MudText>
+						</MudListItem>
+
+						<MudListItem Avatar="@Icons.Material.Filled.Headphones">
+							<MudText Typo="Typo.h6" Style="font-weight:bold">@Applicant.PhoneNumber</MudText>
+							<MudText Typo="Typo.body2">Phone</MudText>
+						</MudListItem>
+					</MudList>
+
+					@if (!Applicant.isAuthUser)
+				{
+					<MudButton Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Contact</MudButton>
+				}
+				else
+				{
+					<MudButton Href="edit-applicant-info" Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Edit Information</MudButton>
+
+				}
+
+			</MudItem>
+		</MudGrid>
+
+
+
+
+	</MudContainer>
+}

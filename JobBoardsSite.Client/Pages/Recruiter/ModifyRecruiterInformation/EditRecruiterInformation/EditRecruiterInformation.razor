@@ -1,6 +1,10 @@
 ﻿@page "/edit-recruiter-information"
 
-<RecruiterInformationUpsert Mode="edit"/>
+@if (Recruiter != null)
+{
+	<RecruiterInformationUpsert Recruiter="Recruiter" Mode="edit" />
+}
+
 @code {
 
 }

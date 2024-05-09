@@ -13,6 +13,7 @@ namespace JobBoardsSite.Shared.Enums
 		EmailDoesntExist,
 		PasswordsMismatch,
 		InternalServerError,
-		DatabaseError
+		DatabaseError,
+		UserDoesntExist
 	}
 }

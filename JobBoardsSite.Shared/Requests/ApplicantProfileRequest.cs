@@ -37,7 +37,7 @@ namespace JobBoardsSite.Shared.Requests
 			public string ShortBio { get; set; }
 
 
-			public List<WorkExperienceRequest> WorkExperiences { get; set; } = new();
+			public string WorkExperiences { get; set; } = string.Empty;
 
 		
 	}

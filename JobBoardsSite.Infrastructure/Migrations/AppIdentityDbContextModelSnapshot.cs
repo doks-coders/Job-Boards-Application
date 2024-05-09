@@ -80,6 +80,40 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("JobBoardsSite.Shared.Entities.ApplicantJobApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ApplicantId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateApplied")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecruiterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicantId");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("RecruiterId");
+
+                    b.ToTable("ApplicantJobApplications");
+                });
+
             modelBuilder.Entity("JobBoardsSite.Shared.Entities.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
@@ -166,6 +200,9 @@ namespace JobBoardsSite.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("UserType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkExperiences")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -385,6 +422,33 @@ namespace JobBoardsSite.Infrastructure.Migrations
                     b.Navigation("AppRole");
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("JobBoardsSite.Shared.Entities.ApplicantJobApplication", b =>
+                {
+                    b.HasOne("JobBoardsSite.Shared.Entities.ApplicationUser", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("JobBoardsSite.Shared.Entities.JobItem", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("JobBoardsSite.Shared.Entities.ApplicationUser", "Recruiter")
+                        .WithMany()
+                        .HasForeignKey("RecruiterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Applicant");
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Recruiter");
                 });
 
             modelBuilder.Entity("JobBoardsSite.Shared.Entities.JobItem", b =>

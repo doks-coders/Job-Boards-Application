@@ -7,6 +7,8 @@ using System.Text;
 using JobBoardsSite.Client.Services.Interfaces;
 using JobBoardsSite.Shared.Requests;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Components;
+using JobBoardsSite.Shared.Constants;
 
 namespace JobBoardsSite.Client.Services
 {
@@ -14,18 +16,21 @@ namespace JobBoardsSite.Client.Services
 	{
 		private readonly HttpClient _httpClient;
 		private readonly IManageLocalStorage _manageLocalStorage;
+		private readonly NavigationManager _navigationManager;
 		public BaseService(HttpClient httpClient, IManageLocalStorage manageLocalStorage)
 		{
 			_httpClient = httpClient;
 			_manageLocalStorage = manageLocalStorage;
 		}
+
+		
 		public async Task<ResponseModal> SendRequest(RequestModal requestModal)
 		{
 			HttpResponseMessage response = new();
 			StringContent content;
 
 			var request = new HttpRequestMessage();
-			request.RequestUri = new("https://localhost:7090/" + requestModal.Url);
+			request.RequestUri = new(UrlConstants.BaseBackendURL + requestModal.Url);
 
 			//Adds auth Headers if any
 			request = await AddAuthorizationHeaders(request, _manageLocalStorage);

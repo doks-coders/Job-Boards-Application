@@ -21,6 +21,7 @@
 
 					<MultiChipSelectComponent Skills="Javascript||Nodejs||Visual Studio||Python"
 											  Label="Skill"
+											  Value="@model.SelectedSkills"
 											  ValueChanged="(e)=>{model.SelectedSkills = e;}" />
 
 
@@ -38,7 +39,7 @@
 
 				<div Class="pa-3">
 					<MudText Style="text-align:center;font-weight:bold">WORK EXPERIENCE</MudText>
-					@foreach (var work in model.WorkExperiences)
+					@foreach (var (work, index) in WorkExperiences.Select((item, index) => (item, index)))
 					{
 						<div Class="pa-3 mt-3">
 							<MudTextField Label="Company" Class="mt-3"
@@ -56,7 +57,11 @@
 							<MudTextField Lines="3" Label="Summary" Class="mt-3"
 										  @bind-Value="work.Summary" For="@(() => work.Summary)" />
 						</div>
+						<div class="d-flex justify-end">
+							<MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="()=>DeleteWorkExperience(index)">Delete</MudButton>
+						</div>
 					}
+
 					<div class="d-flex justify-center">
 						<MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="()=>AddWorkExperience()">Add Work Experience</MudButton>
 					</div>

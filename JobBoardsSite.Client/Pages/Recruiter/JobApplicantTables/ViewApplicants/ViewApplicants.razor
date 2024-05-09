@@ -1,0 +1,49 @@
+﻿@page "/view-your-applicants"
+
+@using System.Net.Http.Json
+@using JobBoardsSite.Shared.Responses
+@using MudBlazor
+
+@inject HttpClient httpClient
+@inject ISnackbar Snackbar
+
+<MudTable Items="@Elements" Dense="@dense" Hover="false" ReadOnly="true" CanCancelEdit="@canCancelEdit" Filter="new Func<ApplicantsTableResponse,bool>(FilterFunc)"
+		  @bind-SelectedItem="selectedItem1" SortLabel="Sort By" 
+		 >
+	<ToolBarContent>
+		<MudText Typo="Typo.h6">View Applicants</MudText>
+		<MudSpacer />
+		<MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+	</ToolBarContent>
+
+	<HeaderContent>
+		<MudTh><MudTableSortLabel SortBy="new Func<ApplicantsTableResponse, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortBy="new Func<ApplicantsTableResponse, object>(x=>x.Email)">Email</MudTableSortLabel></MudTh>
+		<!--<MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ApplicantsTableResponse, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>-->
+
+		<MudTh><MudTableSortLabel SortBy="new Func<ApplicantsTableResponse, object>(x=>x.JobTitle)">Job Title</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortBy="new Func<ApplicantsTableResponse, object>(x=>x.Salary)">Salary</MudTableSortLabel></MudTh>
+		<MudTh></MudTh>
+	</HeaderContent>
+	<RowTemplate>
+			<MudTd DataLabel="Name">@context.Name</MudTd>
+			<MudTd DataLabel="Email">@context.Email</MudTd>
+			<MudTd DataLabel="JobTitle">@context.JobTitle</MudTd>
+			<MudTd DataLabel="Salary">@context.Salary</MudTd>
+			<MudTd>
+				<MudButton Href=@("/applicant-information/"+context.Id) Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">View Profile</MudButton>
+			</MudTd>
+			
+
+		</RowTemplate>
+
+		<PagerContent>
+			<MudTablePager />
+		</PagerContent>
+		<EditButtonContent Context="button">
+			<MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
+		</EditButtonContent>
+	</MudTable>
+
+
+

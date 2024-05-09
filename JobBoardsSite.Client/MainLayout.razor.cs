@@ -1,4 +1,10 @@
-﻿using MudBlazor;
+﻿using JobBoardsSite.Client.Services;
+using JobBoardsSite.Client.Services.Interfaces;
+using JobBoardsSite.Shared.Constants;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Routing;
+using MudBlazor;
 
 namespace JobBoardsSite.Client
 {
@@ -14,5 +20,70 @@ namespace JobBoardsSite.Client
                 }
             }
         };
-    }
+
+		private string currentLocation { get; set; }
+
+		[Inject]
+		AuthenticationStateProvider _authenticationStateProvider { get; set; }
+
+		[Inject]
+		public IClientAuthService ClientAuthService { get; set; }
+
+
+		protected override async Task OnInitializedAsync()
+		{
+			var res= await _authenticationStateProvider.GetAuthenticationStateAsync();
+			ClientAuthService.RaiseEventAuthenticationStateChanged(res);
+
+			NavigationManager.LocationChanged += HandleLocationChanged;
+		}
+		private List<string> ApplicantsUrl = new() { 
+"/create-applicant-info",
+"/edit-applicant-info"
+		};
+
+		private List<string> RecruitersUrl = new() { "job-create",
+"job-edit",
+"view-your-applicants",
+"view-your-jobs",
+"edit-recruiter-information",
+"create-recruiter-information",
+
+"recruiter-admin-homepage",
+"view-prospective-applicants"
+		};
+
+		private async void HandleLocationChanged(object sender, LocationChangedEventArgs e)
+		{
+			if (currentLocation != e.Location)
+			{
+				var isApplicant = ClientAuthService.AuthenticationState.User.IsInRole(RoleConstants.Applicant);
+				var isRecruiter = ClientAuthService.AuthenticationState.User.IsInRole(RoleConstants.Recruiter);
+
+				if (ApplicantsUrl.Any(u => (e.Location.Contains(UrlConstants.BaseFrontendURL +u))))
+				{
+					if (!isApplicant)
+					{
+						NavigationManager.NavigateTo("/login");
+					}
+				}
+
+				if (RecruitersUrl.Any(u => (e.Location.Contains(UrlConstants.BaseFrontendURL+u))))
+				{
+					if (!isRecruiter)
+					{
+						NavigationManager.NavigateTo("/login");
+					}
+				}
+			}
+			currentLocation = e.Location;
+
+		}
+
+		public void Dispose()
+		{
+			// Remember to unsubscribe from the event to avoid memory leaks
+			NavigationManager.LocationChanged -= HandleLocationChanged;
+		}
+	}
 }

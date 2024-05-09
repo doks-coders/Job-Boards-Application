@@ -4,7 +4,7 @@ using JobBoardsSite.Shared.Responses;
 
 namespace JobBoardsSite.Client.Services.Interfaces
 {
-	public interface IJobService
+	public interface IClientJobService
 	{
 		Task<ResponseModal> CreateJob(CreateJobRequest jobRequest);
 

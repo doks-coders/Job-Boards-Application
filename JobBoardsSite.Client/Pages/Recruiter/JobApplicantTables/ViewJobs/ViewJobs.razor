@@ -1,0 +1,43 @@
+﻿@page "/view-your-jobs"
+
+@using System.Net.Http.Json
+@using JobBoardsSite.Shared.Responses
+@using MudBlazor
+
+
+
+<MudTable Items="@Elements" Dense="@dense" Hover="false" ReadOnly="true" CanCancelEdit="@canCancelEdit" Filter="new Func<JobItemTableResponse,bool>(FilterFunc)"
+		  @bind-SelectedItem="selectedItem1" SortLabel="Sort By">
+	<ToolBarContent>
+		<MudText Typo="Typo.h6">View Jobs</MudText>
+		<MudSpacer />
+		<MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+	</ToolBarContent>
+
+	<HeaderContent>
+		<MudTh><MudTableSortLabel SortBy="new Func<JobItemTableResponse, object>(x=>x.JobTitle)">Name</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortBy="new Func<JobItemTableResponse, object>(x=>x.ContactEmail)">Contact Email</MudTableSortLabel></MudTh>
+		<!--<MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<JobItemTableResponse, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>-->
+
+		<MudTh><MudTableSortLabel SortBy="new Func<JobItemTableResponse, object>(x=>x.Salary)">Salary</MudTableSortLabel></MudTh>
+		<MudTh></MudTh>
+	</HeaderContent>
+	<RowTemplate>
+		<MudTd DataLabel="Job Title">@context.JobTitle</MudTd>
+			<MudTd DataLabel="Contact Email">@context.ContactEmail</MudTd>
+			<MudTd DataLabel="Salary">@context.Salary</MudTd>
+			<MudTd>
+				<MudButton Href="@("/job-information/"+context.JobId)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">View Job</MudButton>
+			</MudTd>
+
+
+		</RowTemplate>
+
+		<PagerContent>
+			<MudTablePager />
+		</PagerContent>
+		
+	</MudTable>
+
+
+

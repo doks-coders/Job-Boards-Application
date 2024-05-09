@@ -8,7 +8,7 @@ namespace JobBoardsSite.Client.Pages.Recruiter.Job.JobUpsert
 	public partial class JobUpsert
 	{
 		[Inject]
-		IJobService JobService { get; set; }
+		IClientJobService JobService { get; set; }
 
 		[Inject]
 		NavigationManager NavigationManager { get; set; }
