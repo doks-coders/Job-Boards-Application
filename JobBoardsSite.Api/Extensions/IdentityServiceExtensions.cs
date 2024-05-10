@@ -17,7 +17,9 @@ namespace JobBoardsSite.Api.Extensions
 
 			services.AddIdentityCore<ApplicationUser>(e =>
 			{
-				e.Password.RequireNonAlphanumeric = true;
+				e.Password.RequireNonAlphanumeric = false;
+				e.Password.RequireLowercase = false;
+				e.Password.RequireUppercase = false;
 				e.Password.RequiredLength = 6;
 			}).AddRoles<AppRole>()
 			.AddRoleManager<RoleManager<AppRole>>()

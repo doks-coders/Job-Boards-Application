@@ -1,5 +1,6 @@
 ﻿using JobBoardsSite.Client.Pages.Applicant.JobInformation;
 using JobBoardsSite.Client.Services.Interfaces;
+using JobBoardsSite.Shared.Constants;
 using JobBoardsSite.Shared.Responses;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -16,10 +17,14 @@ namespace JobBoardsSite.Client.Pages.Applicant.JobInformation
         [Inject]
 		IDialogService DialogService { get; set; }
 
+		[Inject]
+		IClientAuthService ClientAuthService { get; set; }
 
         [Inject]
         IClientJobService JobService { get; set; }
 
+		[Inject]
+		NavigationManager NavigationManager { get; set; }
 
 		[Inject]
 		IClientApplicantService ApplicantService { get; set; }
@@ -69,12 +74,20 @@ namespace JobBoardsSite.Client.Pages.Applicant.JobInformation
 
 		protected async Task ApplyToJob()
 		{
-			var res = await ApplicantService.JobApply(Job.Id);
-			var parameters = new DialogParameters<JobAppliedDialog>();
-			parameters.Add(x => x.ContentText, res.Message);
+			if (!ClientAuthService.AuthenticationState.User.IsInRole(RoleConstants.Applicant)) 
+			{
+				NavigationManager.NavigateTo("/login");
+			}
+			else
+			{
+				var res = await ApplicantService.JobApply(Job.Id);
+				var parameters = new DialogParameters<JobAppliedDialog>();
+				parameters.Add(x => x.ContentText, res.Message);
 
-			var options = new DialogOptions { CloseOnEscapeKey = true, };
-			DialogService.Show<JobAppliedDialog>("Job Application", parameters);
+				var options = new DialogOptions { CloseOnEscapeKey = true, };
+				DialogService.Show<JobAppliedDialog>("Job Application", parameters);
+			}
+			
 		}
 	}
 }

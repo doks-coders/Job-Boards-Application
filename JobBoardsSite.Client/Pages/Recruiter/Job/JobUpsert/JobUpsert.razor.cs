@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
 using JobBoardsSite.Client.Services.Interfaces;
+using JobBoardsSite.Client.Helpers;
 
 namespace JobBoardsSite.Client.Pages.Recruiter.Job.JobUpsert
 {
@@ -13,9 +14,13 @@ namespace JobBoardsSite.Client.Pages.Recruiter.Job.JobUpsert
 		[Inject]
 		NavigationManager NavigationManager { get; set; }
 
-		public string WorkLocation { get; set; }
-		CreateJobRequest model = new CreateJobRequest();
+		[Parameter]
+		public EditJobRequest EditJobRequest { get; set; }
 
+		public string WorkLocation { get; set; }
+
+		CreateJobRequest model = new CreateJobRequest();
+		ClientMapperProfiles _mapper = new();
 
 		bool success;
 
@@ -23,12 +28,30 @@ namespace JobBoardsSite.Client.Pages.Recruiter.Job.JobUpsert
 		public string FormType { get; set; } = "create";
 
 
+		protected override async Task OnInitializedAsync()
+		{
+			if (EditJobRequest != null)
+			{
+				model = _mapper.EditJobRequestToCreateJobRequest(EditJobRequest);
+			}
+
+		}
 
 		private async Task OnValidSubmit(EditContext context)
 		{
 			success = true;
 			StateHasChanged();
-			var res =  await JobService.CreateJob(model);
+
+			if (FormType == "create")
+			{
+				await JobService.CreateJob(model);
+			}
+			if (FormType == "edit")
+			{
+				var editRequest = _mapper.CreateJobRequestToEditJobRequest(model);
+				editRequest.Id = EditJobRequest.Id;
+				await JobService.EditJob(editRequest);
+			}
 
 			NavigationManager.NavigateTo("/recruiter-admin-homepage");
 		}

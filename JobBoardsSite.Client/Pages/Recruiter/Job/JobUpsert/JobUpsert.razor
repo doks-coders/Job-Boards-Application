@@ -21,32 +21,41 @@
 								  @bind-Value="model.Salary" For="@(() => model.Salary)" />
 
 					<MultiChipSelectComponent 
-											  Skills="Javascript||Nodejs||Visual Studio||Python"
+						Value="@model.SelectedSkills"
+											  Skills="@(ListStringConstants.Skills)"
 											  Label="Skill"
 											  ValueChanged="(e)=>{model.SelectedSkills = e;}" />
 
 
 
 		
-					<MultiChipSelectComponent Skills="Remote||On-Site||Hybrid"
+					<MultiChipSelectComponent 
+						Value="@model.WorkLocationType"
+						Skills="Remote||On-Site||Hybrid"
 											  Label="Work Location"
 											  ValueChanged="(e)=>{model.WorkLocationType = e;}" />
 
-					<MultiChipSelectComponent Skills="Full Time||Part TIme||Contract"
+					<MultiChipSelectComponent 
+						Value="@model.WorkType"
+						Skills="Full Time||Part TIme||Contract"
 											  Label="Work Type"
 											  ValueChanged="(e)=>{model.WorkType = e;}" />
 
 
 
 
-					<MudTextField Label="Contact Email" Class="mt-3"
+					<MudTextField 
+						Label="Contact Email" Class="mt-3"
 								  @bind-Value="model.ContactEmail" For="@(() => model.ContactEmail)" />
 
 				</MudCardContent>
 
 				<div Class="pa-3">
-					<MultiListItem ValueChanged="(e)=>{model.Responsiblities = e;}" Label="Responsibility" />
-					<MultiListItem ValueChanged="(e)=>{model.Qualifications = e;}" Label="Qualification" />
+					<MultiListItem 
+						InputValue="@model.Responsiblities"
+						ValueChanged="(e)=>{model.Responsiblities = e;}" Label="Responsibility" />
+					<MultiListItem InputValue="@model.Qualifications"
+						ValueChanged="(e)=>{model.Qualifications = e;}" Label="Qualification" />
 				</div>
 				<MudCardActions>
 					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Save</MudButton>

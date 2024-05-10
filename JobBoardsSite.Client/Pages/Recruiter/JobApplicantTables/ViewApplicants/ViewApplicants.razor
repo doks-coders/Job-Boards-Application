@@ -8,7 +8,9 @@
 @inject ISnackbar Snackbar
 
 <MudTable Items="@Elements" Dense="@dense" Hover="false" ReadOnly="true" CanCancelEdit="@canCancelEdit" Filter="new Func<ApplicantsTableResponse,bool>(FilterFunc)"
-		  @bind-SelectedItem="selectedItem1" SortLabel="Sort By" 
+		  @bind-SelectedItem="selectedItem1"
+		  AllowUnsorted
+		  SortLabel="Sort By" 
 		 >
 	<ToolBarContent>
 		<MudText Typo="Typo.h6">View Applicants</MudText>

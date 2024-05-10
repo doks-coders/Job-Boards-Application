@@ -14,6 +14,8 @@ namespace JobBoardsSite.Shared.Enums
 		PasswordsMismatch,
 		InternalServerError,
 		DatabaseError,
-		UserDoesntExist
+		UserDoesntExist,
+		UserExists,
+		ChangesNotSaved
 	}
 }

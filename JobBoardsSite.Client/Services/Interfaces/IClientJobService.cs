@@ -8,6 +8,8 @@ namespace JobBoardsSite.Client.Services.Interfaces
 	{
 		Task<ResponseModal> CreateJob(CreateJobRequest jobRequest);
 
+		Task<ResponseModal> EditJob(EditJobRequest jobRequest);
+
 		Task<List<JobListItemResponse>> GetJobs();
 
 		Task<JobItemResponse> GetJob(int id);

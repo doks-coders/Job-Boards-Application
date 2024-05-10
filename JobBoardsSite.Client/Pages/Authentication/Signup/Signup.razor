@@ -17,11 +17,26 @@
 						<MudSelectItem Value="@(RoleConstants.Applicant)" />
 						<MudSelectItem Value="@(RoleConstants.Recruiter)" />
 					</MudSelect>
-					<MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
-								  @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
-					<MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
-								  @bind-Value="model.Verify" For="@(() => model.Verify)" InputType="InputType.Password" />
-				</MudCardContent>
+					<div class="d-flex align-center">
+						<MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+									  @bind-Value="model.Password" For="@(() => model.Password)" InputType="showPassword?InputType.Text:InputType.Password" />
+
+<MudIconButton OnClick="()=>showPassword = !showPassword" Class="ml-3" Icon="@Icons.Material.Filled.RemoveRedEye">
+
+									  </MudIconButton>
+				
+					</div>
+					
+					<div class="d-flex align-center">
+						<MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+								  @bind-Value="model.Verify" For="@(() => model.Verify)" InputType="showVerifyPassword?InputType.Text:InputType.Password" />
+			
+
+									  <MudIconButton OnClick="()=>showVerifyPassword = !showVerifyPassword" Class="ml-3" Icon="@Icons.Material.Filled.RemoveRedEye">
+
+									  </MudIconButton>
+						</div
+						</MudCardContent>
 				<MudCardActions Class="justify-center d-flex mt-3">
 					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
 				</MudCardActions>

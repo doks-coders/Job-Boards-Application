@@ -11,5 +11,10 @@ namespace JobBoardsSite.Client.Helpers
 		public partial ApplicantProfileRequest ApplicantResponseToApplicantProfileRequest(ApplicantResponse response);
 		public partial RecruiterProfileRequest RecruiterResponseToRecruitertProfileRequest(RecruiterResponse response);
 
+        public partial EditJobRequest JobItemResponseToEditJobRequest(JobItemResponse request);
+		public partial CreateJobRequest EditJobRequestToCreateJobRequest(EditJobRequest request);
+		public partial EditJobRequest CreateJobRequestToEditJobRequest(CreateJobRequest request);
+
+
 	}
 }

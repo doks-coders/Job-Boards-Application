@@ -10,14 +10,17 @@
 	</MudItem>
 	
 </MudGrid>
-<MudButton OnClick="RetrievePage" FullWidth>Search</MudButton>
+<div class="d-flex justify-center my-2">
+	<MudButton Variant="Variant.Outlined" OnClick="RetrievePage">Search</MudButton>
+</div>
+
 <MudGrid>
 	@foreach (var item in ApplicantList)
 	{
 		<MudItem sm="6" md="4">
 			<MudCard>
 				<MudCardContent Class="d-flex align-center flex-column">
-					<MudImage Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
+					<MudImage ObjectFit="ObjectFit.Cover" Elevation="2" Style="border-radius:100%" Src="images/applicant.jpg" Width="100" Height="100"></MudImage>
 					<MudText Style="font-weight:bold">@item.Name</MudText>
 					<MudText Typo="Typo.body2">@item.Title</MudText>
 				</MudCardContent>

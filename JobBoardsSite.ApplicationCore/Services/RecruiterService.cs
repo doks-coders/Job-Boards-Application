@@ -49,6 +49,7 @@ namespace JobBoardsSite.ApplicationCore.Services
 
 			var applications = await _unitOfWork.ApplicantJobApplications.GetAll(u => u.RecruiterId == userId, includeProperties: "Applicant,Job");
 
+			applications = applications.OrderByDescending(u => u.DateApplied);
 			
 			var applicantTable = applications.Select(e => new ApplicantsTableResponse()
 			{
@@ -70,6 +71,8 @@ namespace JobBoardsSite.ApplicationCore.Services
 
 			var applications = await _unitOfWork.Jobs.GetAll(u => u.RecruiterId == userId);
 
+			applications = applications.OrderByDescending(u => u.Created);
+
 			var applicantTable = applications.Select(e => new JobItemTableResponse()
 			{
 				JobId = e.Id,
@@ -78,6 +81,7 @@ namespace JobBoardsSite.ApplicationCore.Services
 				Salary = e.Salary
 			}).ToList();
 
+			
 			return new ResponseModal() { Data = applicantTable, isSuccess = true };
 
 		}

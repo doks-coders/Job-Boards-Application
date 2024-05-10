@@ -15,6 +15,8 @@ namespace JobBoardsSite.ApplicationCore.Helpers
 	{
 		public partial JobItem JobRequestToJob(CreateJobRequest request);
 
+		public partial EditJobRequest EditJobRequest(JobItem request);
+
 		public partial List<JobListItemResponse> JobsToJobListItemResponse(List<JobItem> jobs);
 
 		public partial JobItemResponse JobToJobItemResponse(JobItem job);

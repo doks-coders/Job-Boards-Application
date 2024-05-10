@@ -82,11 +82,29 @@ namespace JobBoardsSite.Shared.Models
 						{ "Message", "Passwords do not match" }
 					}
 				},
+				{
+					ErrorCodes.UserExists,new (){
+
+						{ "Code",  Convert.ToString((int) HttpStatusCode.Unauthorized)},
+						{ "Message", "User Exists Already" }
+					}
+				},
+
 
 				
 
-
 				//System Error
+				
+
+
+				{
+					ErrorCodes.ChangesNotSaved,new (){
+
+						{ "Code",  Convert.ToString((int) HttpStatusCode.InternalServerError)},
+						{ "Message", "Changes did not save" }
+					}
+				},
+
 				{
 					ErrorCodes.InternalServerError,new (){
 

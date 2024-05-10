@@ -15,6 +15,7 @@ namespace JobBoardsSite.Client.Pages.Applicant.ApplicantInformation
 
 		public List<WorkExperience> WorkExperiences = null;
 
+		
 
 		[Inject]
 		IClientApplicantService ClientApplicantService { get; set; }

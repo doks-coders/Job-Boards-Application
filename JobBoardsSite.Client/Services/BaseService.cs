@@ -9,6 +9,8 @@ using JobBoardsSite.Shared.Requests;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Components;
 using JobBoardsSite.Shared.Constants;
+using MudBlazor;
+using JobBoardsSite.Client.Pages.Applicant.JobInformation;
 
 namespace JobBoardsSite.Client.Services
 {
@@ -17,12 +19,15 @@ namespace JobBoardsSite.Client.Services
 		private readonly HttpClient _httpClient;
 		private readonly IManageLocalStorage _manageLocalStorage;
 		private readonly NavigationManager _navigationManager;
-		public BaseService(HttpClient httpClient, IManageLocalStorage manageLocalStorage)
+		private readonly IDialogService _dialogService;
+		public BaseService(HttpClient httpClient, IManageLocalStorage manageLocalStorage, IDialogService dialogService)
 		{
 			_httpClient = httpClient;
 			_manageLocalStorage = manageLocalStorage;
+			_dialogService = dialogService;
 		}
 
+		
 		
 		public async Task<ResponseModal> SendRequest(RequestModal requestModal)
 		{
@@ -78,7 +83,16 @@ namespace JobBoardsSite.Client.Services
 			}
 			catch (Exception ex)
 			{
+				
+				var parameters = new DialogParameters<JobAppliedDialog>();
+				parameters.Add(x => x.ContentText, ex.Message);
+
+				var options = new DialogOptions { CloseOnEscapeKey = true, };
+				_dialogService.Show<JobAppliedDialog>("Error", parameters);
+
 				throw new Exception($"Http Error Code: 500, Message:{ex.Message}");
+
+
 
 			}
 

@@ -39,6 +39,28 @@ namespace JobBoardsSite.Client.Services
 			
 		}
 
+
+		public async Task<ResponseModal> EditJob(EditJobRequest jobRequest)
+		{
+			var response = await _baseService.SendRequest(new()
+			{
+				Method = ApiVerbs.POST,
+				Data = jobRequest,
+				Url = "api/job/edit"
+
+			});
+			if (response.isSuccess)
+			{
+				return response;
+			}
+			else
+			{
+				throw new Exception(response.Message);
+			}
+
+
+		}
+
 		public async Task<JobItemResponse> GetJob(int id)
 		{
 			var response = await _baseService.SendRequest(new()

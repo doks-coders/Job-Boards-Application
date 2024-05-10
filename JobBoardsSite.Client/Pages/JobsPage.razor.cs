@@ -20,9 +20,9 @@ namespace JobBoardsSite.Client.Pages
 
 		public List<JobListItemResponse> JobList { get; set; } = new();
 
-		private string Country { get; set; } = "";
-		public string SelectedSkills { get; set; } = "";
-		public string WorkType { get; set; } = "";
+		private string Country { get; set; } = "All";
+		public string SelectedSkills { get; set; } = "All";
+		public string WorkType { get; set; } = "All";
 
 		private int _selected = 1;
 		private int _total = 4;
@@ -32,6 +32,7 @@ namespace JobBoardsSite.Client.Pages
 		{
 			
 			var value = await JobService.GetJobsPagination(new() { 
+				PageLimit=3,
 				PageNumber = _selected,
 				Skills = string.IsNullOrEmpty(SelectedSkills) ? "All" : SelectedSkills,
 				Country = string.IsNullOrEmpty(Country) ? "All" : Country,
@@ -48,7 +49,12 @@ namespace JobBoardsSite.Client.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
-			await RetrievePage();
+            if (ClientAuthService.AuthenticationState.User.IsInRole(RoleConstants.Recruiter))
+            {
+                NavigationManager.NavigateTo("/recruiter-admin-homepage");
+            }
+
+            await RetrievePage();
 		}
 
 	}

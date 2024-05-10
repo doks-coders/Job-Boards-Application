@@ -3,13 +3,18 @@
 	<MudItem xs="12" md="6">
 		<MudCard Elevation="2">
 			<MudCardContent Class="d-flex align-center">
-				<MudImage Class="mr-3" Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
-				<div class="d-flex justify-center flex-column">
-					<MudText Style="font-weight:bold">Microsoft</MudText>
-					<MudText Typo="Typo.subtitle2" >Abuja</MudText>
-					<MudText Typo="Typo.subtitle2">Software and Hardware</MudText>
-					<MudText Typo="Typo.subtitle2">jobs@microsoft</MudText>
-				</div>
+				<MudImage Class="mr-3" Elevation="2" Style="border-radius:100%" Src="images/company.jpg" Width="100" Height="100"></MudImage>
+				
+				@if (RecruiterResponse != null)
+				{
+					<div class="d-flex justify-center flex-column">
+						<MudText Style="font-weight:bold">@RecruiterResponse.Name</MudText>
+							<MudText Typo="Typo.subtitle2">@RecruiterResponse.Country</MudText>
+							<MudText Typo="Typo.subtitle2">@RecruiterResponse.Industry</MudText>
+							<MudText Typo="Typo.subtitle2">@RecruiterResponse.Email</MudText>
+						</div>
+				}
+				
 				
 			</MudCardContent>
 			<MudCardActions Class="d-flex justify-center">
@@ -22,7 +27,7 @@
 
 		<MudCard Elevation="2" Style="flex-basis:50%">
 			<MudCardContent Class="d-flex pa-0 align-center flex-column">
-				<MudImage Class="my-2" Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
+				<MudImage Class="my-2" Elevation="2" Style="border-radius:100%" Src="images/searchusers.jpg" Width="100" Height="100"></MudImage>
 				<MudText Style="font-weight:bold">Search For Applicants</MudText>
 			</MudCardContent>
 			<MudCardActions Class="d-flex justify-center">
@@ -32,7 +37,7 @@
 
 		<MudCard Elevation="2" Class="ml-2" Style="flex-basis:50%">
 			<MudCardContent Class="d-flex pa-0 align-center flex-column">
-				<MudImage Class="my-2" Elevation="2" Style="border-radius:100%" Src="images/image.jpeg" Width="100" Height="100"></MudImage>
+				<MudImage Class="my-2" Elevation="2" Style="border-radius:100%" Src="images/create-job.jpg" Width="100" Height="100"></MudImage>
 				<MudText Style="font-weight:bold">Create New Job</MudText>
 			</MudCardContent>
 			<MudCardActions Class="d-flex justify-center">

@@ -19,7 +19,7 @@
 								  @bind-Value="model.Title" For="@(() => model.Title)" />
 
 
-					<MultiChipSelectComponent Skills="Javascript||Nodejs||Visual Studio||Python"
+					<MultiChipSelectComponent Skills="@(ListStringConstants.Skills)"
 											  Label="Skill"
 											  Value="@model.SelectedSkills"
 											  ValueChanged="(e)=>{model.SelectedSkills = e;}" />

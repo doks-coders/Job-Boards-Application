@@ -25,27 +25,34 @@ namespace JobBoardsSite.Client.Pages.Authentication.Login
 			public string Email { get; set; }
 
 			[Required]
-			[StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
 			public string Password { get; set; }
 
 		}
 
 		private async Task  OnValidSubmit(EditContext context)
 		{
-			success = true;
+			try
+			{
+				success = true;
 
-			var authResponse = await ClientAuthService.Login(new LoginUserRequest(model.Email, model.Password));
+				var authResponse = await ClientAuthService.Login(new LoginUserRequest(model.Email, model.Password));
 
 
-			var res =  await ClientAuthService.SignInUser(authResponse);
+				var res = await ClientAuthService.SignInUser(authResponse);
 
-			var i = res.User.IsInRole("Applicant");
-			ClientAuthService.RaiseEventAuthenticationStateChanged(res);
+				var i = res.User.IsInRole("Applicant");
+				ClientAuthService.RaiseEventAuthenticationStateChanged(res);
 
-			StateHasChanged();
+				StateHasChanged();
 
-			NavigationManager.NavigateTo("/");
+				NavigationManager.NavigateTo("/");
 
+			}
+			catch (Exception ex)
+			{
+
+			}
+			
 		}
 
 	}

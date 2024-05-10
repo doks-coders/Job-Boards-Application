@@ -10,6 +10,10 @@ namespace JobBoardsSite.Shared.Responses
 	{
 		public int Id { get; set; }
 
+		public string CompanyName { get; set; }
+
+		public int CompanyId { get; set; }
+
 		public string JobTitle { get; set; }
 
 
@@ -38,5 +42,7 @@ namespace JobBoardsSite.Shared.Responses
 
 
 		public string ContactEmail { get; set; }
+
+		public bool isAuthUser { get; set; }
 	}
 }

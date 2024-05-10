@@ -8,6 +8,9 @@ namespace JobBoardsSite.Client.Pages.Recruiter.RecruiterAdmin
 	{
 		[Inject]
 		IClientRecruiterService ClientRecruiterService { get; set; }
+
+
+		RecruiterResponse RecruiterResponse = null;
 		
 
 		private List<JobItemTableResponse> JobItems = new List<JobItemTableResponse>();
@@ -15,6 +18,8 @@ namespace JobBoardsSite.Client.Pages.Recruiter.RecruiterAdmin
 		private List<ApplicantsTableResponse> Applicants = new List<ApplicantsTableResponse>();
 		protected override async Task OnInitializedAsync()
 		{
+
+			RecruiterResponse = await ClientRecruiterService.GetMyRecruiterInfo();
 
 			Applicants = await ClientRecruiterService.GetApplicantsTable();
 

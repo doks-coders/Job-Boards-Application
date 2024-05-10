@@ -6,12 +6,12 @@
 				<MudGrid>
 					
 					<MudItem Class="d-flex align-center" xs="12" md="10">
-						<MudImage Src="images/image.jpeg" Alt="Mony the dog" Height="50" Width="50" Elevation="25" Class="rounded-lg" />
+					<MudImage Src="images/company.jpg" Alt="Mony the dog" Height="50" Width="50" Elevation="25" Class="rounded-lg" />
 
 						<div  Class=" ml-5 d-flex align-center">
 							<div Class="d-flex  flex-column">
-								<MudText Style="font-size:small" Class="mr-10">@Job.CompanyName</MudText>
-									<MudText Style="font-size:x-small">@Job.JobTitle</MudText>
+							<MudText Style="font-size:small" Class="mr-10">@Job.JobTitle</MudText>
+									<MudText Style="font-size:x-small">@Job.CompanyName</MudText>
 								</div>
 
 
@@ -42,7 +42,7 @@
 	<MudItem xs="12" md="2">
 
 						<div>
-							<MudText Style="font-size:small">N @Job.Salary</MudText>
+							<MudText Style="font-size:small">$ @Job.Salary</MudText>
 								<MudText Style="font-size:x-small" Typo="Typo.caption">2 days ago</MudText>
 							</div>
 		</MudItem>

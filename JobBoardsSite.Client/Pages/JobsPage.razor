@@ -2,25 +2,22 @@
 
 <MudGrid>
 	<MudItem xs="12" md="6">
-		<SearchItem Label="Country" Value="@Country" SearchItems="All||Nigeria||Ghana||South America" ValueChanged="(e)=>{Country = e;}" />
+		<SearchItem Label="Search Country" Value="@Country" SearchItems="All||Nigeria||Ghana||South America" ValueChanged="(e)=>{Country = e;}" />
 	</MudItem>
 
 	<MudItem xs="12" md="6">
-		<SearchItem Label="Selected Skills" Value="@SelectedSkills" SearchItems="All||Javascript||Nodejs||Visual Studio||Python" ValueChanged="(e)=>{SelectedSkills = e;}" />
+		<SearchItem Label="Search Skill" Value="@SelectedSkills" SearchItems="@(ListStringConstants.Skills)" ValueChanged="(e)=>{SelectedSkills = e;}" />
 	</MudItem>
 
 	<MudItem xs="12" md="6">
-		<SearchItem Label="Work Type" Value="@WorkType" SearchItems="All||Full Time||Part TIme||Contract" ValueChanged="(e)=>{WorkType = e;}" />
+		<SearchItem Label="Search Work Type" Value="@WorkType" SearchItems="All||Full Time||Part TIme||Contract" ValueChanged="(e)=>{WorkType = e;}" />
 	</MudItem>
 </MudGrid>
-<MudButton OnClick="RetrievePage" FullWidth>Search</MudButton>
+<div class="d-flex justify-center my-2">
+	<MudButton Variant="Variant.Outlined" OnClick="RetrievePage">Search</MudButton>
+</div>
 
-@if (ClientAuthService.AuthenticationState.User.IsInRole("Applicant"))
-{
-	<div>
-		You are an Applicant Now
-	</div>
-}
+
 <!---->
 <p class="mt-4">We Found 853 jobs</p>
 

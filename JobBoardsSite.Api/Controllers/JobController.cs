@@ -21,13 +21,18 @@ namespace JobBoardsSite.Api.Controllers
 		public async Task<ResponseModal> Create([FromBody] CreateJobRequest jobRequest)
 		=> await _jobService.CreateJob(jobRequest,User.GetUserId());
 
+		[Authorize]
+		[HttpPost("edit")]
+		public async Task<ResponseModal> Edit([FromBody] EditJobRequest jobRequest)
+		=> await _jobService.EditJob(jobRequest);
+
 		[HttpGet("get-all")]
 		public async Task<ResponseModal> GetAllJobs()
 		=> await _jobService.GetJobs();
 
 		[HttpGet("get-one/{id:int}")]
 		public async Task<ResponseModal> GetOneJob(int id)
-		=> await _jobService.GetJob(id);
+		=> await _jobService.GetJob(id,User);
 
 		[HttpGet("get-all-query")]
 		public async Task<ResponseModal> GetAllQuery([FromQuery] PaginationRequest param)

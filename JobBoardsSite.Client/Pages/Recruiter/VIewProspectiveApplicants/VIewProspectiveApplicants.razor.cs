@@ -8,7 +8,7 @@ namespace JobBoardsSite.Client.Pages.Recruiter.ViewProspectiveApplicants
 	public partial class ViewProspectiveApplicants
 	{
 		public string _normalText { get; set; }
-		private string Country { get; set; } = "Ghana";
+		private string Country { get; set; } = "";
 		public string SelectedSkills { get; set; } = "";
 
 

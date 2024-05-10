@@ -26,7 +26,7 @@ namespace JobBoardsSite.ApplicationCore.Services
 		public async Task<ResponseModal> Register(RegisterUserRequest userRequest)
 		{
 			var userExist = await _userManager.FindByEmailAsync(userRequest.Email);
-			if (userExist != null) throw new CustomException(ErrorCodes.DatabaseError);
+			if (userExist != null) throw new CustomException(ErrorCodes.UserExists);
 
 			if (userRequest.Password != userRequest.Verify) throw new CustomException(ErrorCodes.PasswordsMismatch);
 			var user = new ApplicationUser()

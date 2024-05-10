@@ -19,17 +19,26 @@
         </MudText>
         <MudSpacer />
         <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit">
-
-            @if (ClientAuthService.AuthenticationState.User.IsInRole(RoleConstants.Admin))
+            @if (ClientAuthService.AuthenticationState.User.Claims.Count() > 0)
             {
-                <MudMenuItem Href="/recruiter-admin-homepage">Admin Homepage</MudMenuItem>
+                @if (ClientAuthService.AuthenticationState.User.IsInRole(RoleConstants.Recruiter))
+                {
+                    <MudMenuItem Href="/recruiter-admin-homepage">Admin Homepage</MudMenuItem>
+                }
+                else
+                {
+                    <MudMenuItem OnClick="()=>GoToLink()">Profile</MudMenuItem>
+                }
+                <MudMenuItem OnClick="()=>Logout()">Logout</MudMenuItem>
             }
             else
             {
-                <MudMenuItem OnClick="()=>GoToLink()">Profile</MudMenuItem>
+                <MudMenuItem Href="/sign-up">Sign Up</MudMenuItem>
+                <MudMenuItem Href="/login">Login</MudMenuItem>
             }
-          
-            <MudMenuItem OnClick="()=>GoToLoginPage()" >Logout</MudMenuItem>
+
+            
+            
 
             
         </MudMenu>
@@ -42,15 +51,4 @@
     </MudMainContent>
 </MudLayout>
 
-@code{
-    public void GoToHomePage()
-    {
-        NavigationManager.NavigateTo("/");
-    }
-    public void GoToLink(){
-        NavigationManager.NavigateTo("/applicant-information/0");
-    }
-    public void GoToLoginPage(){
-        NavigationManager.NavigateTo("/login");
-    }
-}
+

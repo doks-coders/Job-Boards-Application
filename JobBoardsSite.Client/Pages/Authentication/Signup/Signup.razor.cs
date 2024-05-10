@@ -17,6 +17,8 @@ namespace JobBoardsSite.Client.Pages.Authentication.Signup
 		NavigationManager NavigationManager { get; set; }
 
 
+		bool showPassword { get; set; } = false;
+		bool showVerifyPassword { get; set; } = false;
 
 		RegisterAccountForm model = new RegisterAccountForm();
 		bool success;
@@ -31,7 +33,7 @@ namespace JobBoardsSite.Client.Pages.Authentication.Signup
 			public string UserType { get; set; }
 
 			[Required]
-			[StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
+			[StringLength(30, ErrorMessage = "Password must be at least 6 characters long.", MinimumLength = 6)]
 			public string Password { get; set; } = "Password1234&";
 
 			[Required]
@@ -42,22 +44,30 @@ namespace JobBoardsSite.Client.Pages.Authentication.Signup
 
 		private async Task OnValidSubmit(EditContext context)
 		{
-			success = true;
-			StateHasChanged();
-
-			var authResponse = await ClientAuthService.Register(new(model.Email,model.UserType,model.Password,model.Verify));
-			var res =  await ClientAuthService.SignInUser(authResponse);
-
-			ClientAuthService.RaiseEventAuthenticationStateChanged(res);
-			//var isAuthenticated = res.User.Identity.IsAuthenticated;
-			if (model.UserType == RoleConstants.Applicant)
+			try
 			{
-				NavigationManager.NavigateTo("/create-applicant-info");
-			}
-			if (model.UserType == RoleConstants.Recruiter)
+				success = true;
+				StateHasChanged();
+
+				var authResponse = await ClientAuthService.Register(new(model.Email, model.UserType, model.Password, model.Verify));
+				var res = await ClientAuthService.SignInUser(authResponse);
+
+				ClientAuthService.RaiseEventAuthenticationStateChanged(res);
+				//var isAuthenticated = res.User.Identity.IsAuthenticated;
+				if (model.UserType == RoleConstants.Applicant)
+				{
+					NavigationManager.NavigateTo("/create-applicant-info");
+				}
+				if (model.UserType == RoleConstants.Recruiter)
+				{
+					NavigationManager.NavigateTo("/create-recruiter-information");
+				}
+
+			}catch(Exception ex)
 			{
-				NavigationManager.NavigateTo("/create-recruiter-information");
+
 			}
+
 
 
 

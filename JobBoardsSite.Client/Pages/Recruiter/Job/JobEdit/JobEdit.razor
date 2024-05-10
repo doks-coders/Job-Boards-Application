@@ -1,3 +1,6 @@
-﻿@page "/job-edit"
+﻿@page "/job-edit/{Id:int}"
 
-<JobUpsert/>
+@if (EditJobRequest != null)
+{
+	<JobUpsert FormType="edit" EditJobRequest="EditJobRequest" />
+}

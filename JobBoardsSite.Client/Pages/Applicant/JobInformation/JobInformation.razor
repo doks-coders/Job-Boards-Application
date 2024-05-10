@@ -8,7 +8,7 @@
 			<MudItem md="7" sm="5">
 				<!------------------>
 				<MudText Typo="Typo.h5" Style="font-weight:bolder">@Job.JobTitle</MudText>
-				<MudText Typo="Typo.caption">Microsoft</MudText>
+				<MudText Typo="Typo.caption">@Job.CompanyName</MudText>
 
 				<div class="d-flex">
 					<MudText Typo="Typo.caption" Style="font-weight:lighter">Nigeria, Port Harcourt</MudText>
@@ -68,9 +68,14 @@
 					</MudListItem>
 
 				</MudList>
+				@if(Job.isAuthUser){
+					<MudButton Href=@("/job-edit/"+Job.Id)  Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Edit Job Info</MudButton>
 
-				<MudButton @onclick="ApplyToJob" Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Apply For Job</MudButton>
-			</MudItem>
+				}else{
+					<MudButton @onclick="ApplyToJob" Class="mt-1" Variant="Variant.Filled" Color="Color.Success" FullWidth>Apply For Job</MudButton>
+
+				}
+				</MudItem>
 		</MudGrid>
 	}
 
