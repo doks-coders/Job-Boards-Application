@@ -2,29 +2,28 @@
 using JobBoardsSite.Shared.Responses;
 using Microsoft.AspNetCore.Components;
 
-namespace JobBoardsSite.Client.Pages.Recruiter.RecruiterAdmin
+namespace JobBoardsSite.Client.Pages.Recruiter.RecruiterAdmin;
+
+public partial class RecruiterAdminHomepage
 {
-	public partial class RecruiterAdminHomepage
+	[Inject]
+	IClientRecruiterService ClientRecruiterService { get; set; }
+
+
+	RecruiterResponse RecruiterResponse = null;
+
+
+	private List<JobItemTableResponse> JobItems = new List<JobItemTableResponse>();
+
+	private List<ApplicantsTableResponse> Applicants = new List<ApplicantsTableResponse>();
+	protected override async Task OnInitializedAsync()
 	{
-		[Inject]
-		IClientRecruiterService ClientRecruiterService { get; set; }
 
+		RecruiterResponse = await ClientRecruiterService.GetMyRecruiterInfo();
 
-		RecruiterResponse RecruiterResponse = null;
-		
+		Applicants = await ClientRecruiterService.GetApplicantsTable();
 
-		private List<JobItemTableResponse> JobItems = new List<JobItemTableResponse>();
+		JobItems = await ClientRecruiterService.GetJobsTable();
 
-		private List<ApplicantsTableResponse> Applicants = new List<ApplicantsTableResponse>();
-		protected override async Task OnInitializedAsync()
-		{
-
-			RecruiterResponse = await ClientRecruiterService.GetMyRecruiterInfo();
-
-			Applicants = await ClientRecruiterService.GetApplicantsTable();
-
-			JobItems = await ClientRecruiterService.GetJobsTable();
-
-		}
 	}
 }

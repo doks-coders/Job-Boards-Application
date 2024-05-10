@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace JobBoardsSite.Shared.Enums;
 
-namespace JobBoardsSite.Shared.Enums
+public enum ErrorCodes
 {
-	public enum ErrorCodes
-	{
-		NotAuthorised,
-		WrongPassword,
-		EmailDoesntExist,
-		PasswordsMismatch,
-		InternalServerError,
-		DatabaseError,
-		UserDoesntExist,
-		UserExists,
-		ChangesNotSaved
-	}
+	NotAuthorised,
+	WrongPassword,
+	EmailDoesntExist,
+	PasswordsMismatch,
+	InternalServerError,
+	DatabaseError,
+	UserDoesntExist,
+	UserExists,
+	ChangesNotSaved
 }

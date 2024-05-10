@@ -5,7 +5,7 @@
 		protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 		{
 			request.Headers.Add("Custom-Header", "Interceptor-Added");
-			
+
 			// Process the request further
 			var response = await base.SendAsync(request, cancellationToken);
 

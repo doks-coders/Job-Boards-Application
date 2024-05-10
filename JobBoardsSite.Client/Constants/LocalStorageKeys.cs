@@ -1,7 +1,6 @@
-﻿namespace JobBoardsSite.Client.Constants
+﻿namespace JobBoardsSite.Client.Constants;
+
+public class LocalStorageKeys
 {
-	public class LocalStorageKeys
-	{
-		public const string User = "User";
-	}
+	public const string User = "User";
 }

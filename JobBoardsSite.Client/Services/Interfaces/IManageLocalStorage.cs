@@ -1,11 +1,10 @@
 ﻿using JobBoardsSite.Shared.Responses;
 
-namespace JobBoardsSite.Client.Services.Interfaces
+namespace JobBoardsSite.Client.Services.Interfaces;
+
+public interface IManageLocalStorage
 {
-	public interface IManageLocalStorage
-	{
-		Task AddUserToLocalStorage(AuthUserResponse user);
-		Task RemoveUserFromLocalStorage();
-		Task<AuthUserResponse?> GetUserFromLocalStorage();
-	}
+	Task AddUserToLocalStorage(AuthUserResponse user);
+	Task RemoveUserFromLocalStorage();
+	Task<AuthUserResponse?> GetUserFromLocalStorage();
 }

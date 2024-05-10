@@ -2,19 +2,18 @@
 using JobBoardsSite.Shared.Requests;
 using JobBoardsSite.Shared.Responses;
 
-namespace JobBoardsSite.Client.Services.Interfaces
+namespace JobBoardsSite.Client.Services.Interfaces;
+
+public interface IClientApplicantService
 {
-	public interface IClientApplicantService
-	{
-		Task UpdateProfile(ApplicantProfileRequest request);
+	Task UpdateProfile(ApplicantProfileRequest request);
 
-		Task<ResponseModal> JobApply(int id);
+	Task<ResponseModal> JobApply(int id);
 
-		Task<ApplicantResponse> GetApplicantInfo(int id);
+	Task<ApplicantResponse> GetApplicantInfo(int id);
 
-		Task<ApplicantResponse> GetApplicantMyInfo();
+	Task<ApplicantResponse> GetApplicantMyInfo();
 
-		Task<PaginationResponse> SearchApplicants(PaginationRequest request);
+	Task<PaginationResponse> SearchApplicants(PaginationRequest request);
 
-	}
 }

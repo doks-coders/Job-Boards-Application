@@ -1,9 +1,8 @@
 ﻿using JobBoardsSite.Shared.Models;
 
-namespace JobBoardsSite.Client.Services.Interfaces
+namespace JobBoardsSite.Client.Services.Interfaces;
+
+public interface IBaseService
 {
-	public interface IBaseService
-	{
-		Task<ResponseModal> SendRequest(RequestModal requestModal);
-	}
+	Task<ResponseModal> SendRequest(RequestModal requestModal);
 }

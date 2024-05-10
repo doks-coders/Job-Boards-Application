@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace JobBoardsSite.Shared.Enums;
 
-namespace JobBoardsSite.Shared.Enums
+public enum ApiVerbs
 {
-	public enum ApiVerbs
-	{
-		GET,
-		POST,
-		PUT,
-		DELETE,
-		PATCH
-	}
+	GET,
+	POST,
+	PUT,
+	DELETE,
+	PATCH
 }

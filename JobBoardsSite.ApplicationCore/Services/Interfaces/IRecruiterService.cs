@@ -1,19 +1,13 @@
 ﻿using JobBoardsSite.Shared.Models;
 using JobBoardsSite.Shared.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace JobBoardsSite.ApplicationCore.Services.Interfaces
+namespace JobBoardsSite.ApplicationCore.Services.Interfaces;
+
+public interface IRecruiterService
 {
-	public interface IRecruiterService
-	{
-		Task<ResponseModal> UpdateRecruiter(int userId, RecruiterProfileRequest request);
-		Task<ResponseModal> GetMyJobs(int userId);
-		Task<ResponseModal> GetMyApplicants(int userId);
-		Task<ResponseModal> GetMyRecruiterInfo(int userId);
-		Task<ResponseModal> GetRecruiterInfo(int userId, int paramUserId);
-	}
+	Task<ResponseModal> UpdateRecruiter(int userId, RecruiterProfileRequest request);
+	Task<ResponseModal> GetMyJobs(int userId);
+	Task<ResponseModal> GetMyApplicants(int userId);
+	Task<ResponseModal> GetMyRecruiterInfo(int userId);
+	Task<ResponseModal> GetRecruiterInfo(int userId, int paramUserId);
 }

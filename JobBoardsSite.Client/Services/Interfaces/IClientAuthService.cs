@@ -2,22 +2,21 @@
 using JobBoardsSite.Shared.Responses;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace JobBoardsSite.Client.Services.Interfaces
+namespace JobBoardsSite.Client.Services.Interfaces;
+
+public interface IClientAuthService
 {
-	public interface IClientAuthService
-	{
-		Task<AuthUserResponse> Register(RegisterUserRequest registerUser);
+	Task<AuthUserResponse> Register(RegisterUserRequest registerUser);
 
-		Task<AuthUserResponse> Login(LoginUserRequest loginUser);
+	Task<AuthUserResponse> Login(LoginUserRequest loginUser);
 
-		Task<AuthenticationState> SignInUser(AuthUserResponse userResponse);
+	Task<AuthenticationState> SignInUser(AuthUserResponse userResponse);
 
-		Task<AuthenticationState> SignOutUser();
+	Task<AuthenticationState> SignOutUser();
 
-		event Action<AuthenticationState> AuthenticationStateChanged;
+	event Action<AuthenticationState> AuthenticationStateChanged;
 
-		AuthenticationState AuthenticationState { get;  }
+	AuthenticationState AuthenticationState { get; }
 
-		void RaiseEventAuthenticationStateChanged(AuthenticationState state);
-	}
+	void RaiseEventAuthenticationStateChanged(AuthenticationState state);
 }

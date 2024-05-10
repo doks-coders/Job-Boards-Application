@@ -3,25 +3,24 @@ using JobBoardsSite.Shared.Models;
 using JobBoardsSite.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JobBoardsSite.Api.Controllers
+namespace JobBoardsSite.Api.Controllers;
+
+public class AuthController : ParentController
 {
-	public class AuthController : ParentController
+	private readonly IAuthService _authService;
+	public AuthController(IAuthService authService)
 	{
-		private readonly IAuthService _authService;
-		public AuthController(IAuthService authService)
-		{
 
-			_authService = authService;
-		}
-		[HttpPost("register")]
-		public async Task<ResponseModal> Register(RegisterUserRequest registerUser)
-			=> await _authService.Register(registerUser);
-
-		[HttpPost("login")]
-		public async Task<ResponseModal> Login(LoginUserRequest loginUser)
-		=> await _authService.Login(loginUser);
-
-
-
+		_authService = authService;
 	}
+	[HttpPost("register")]
+	public async Task<ResponseModal> Register(RegisterUserRequest registerUser)
+		=> await _authService.Register(registerUser);
+
+	[HttpPost("login")]
+	public async Task<ResponseModal> Login(LoginUserRequest loginUser)
+	=> await _authService.Login(loginUser);
+
+
+
 }

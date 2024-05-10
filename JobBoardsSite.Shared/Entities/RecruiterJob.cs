@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace JobBoardsSite.Shared.Entities
+namespace JobBoardsSite.Shared.Entities;
+
+public class RecruiterJob
 {
-	public class RecruiterJob
-	{
-		[Key]
-		public int Id { get; set; }
-		public int RecruiterId { get; set; }
-		public ApplicationUser Recruiter { get; set; }
+	[Key]
+	public int Id { get; set; }
+	public int RecruiterId { get; set; }
+	public ApplicationUser Recruiter { get; set; }
 
 
-		public int JobId { get; set; }
-		public JobItem JobItem { get; set; }
+	public int JobId { get; set; }
+	public JobItem JobItem { get; set; }
 
-	}
 }

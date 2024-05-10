@@ -15,7 +15,7 @@ namespace JobBoardsSite.Client.Pages.Applicant.ModifyApplicantInformation.EditAp
 
 		protected override async Task OnInitializedAsync()
 		{
-			_mapper= new ClientMapperProfiles();
+			_mapper = new ClientMapperProfiles();
 			var applicantInfo = await ClientApplicantService.GetApplicantMyInfo();
 			ApplicantProfileRequest = _mapper.ApplicantResponseToApplicantProfileRequest(applicantInfo);
 		}

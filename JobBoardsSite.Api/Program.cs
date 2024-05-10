@@ -1,7 +1,6 @@
 using JobBoardsSite.Api.Extensions;
 using JobBoardsSite.Api.Middleware;
 using JobBoardsSite.Shared.Models;
-using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +33,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 /*
 app.UseCors(policy =>

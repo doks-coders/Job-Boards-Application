@@ -1,18 +1,17 @@
 ﻿using JobBoardsSite.Shared.Requests;
 using JobBoardsSite.Shared.Responses;
 
-namespace JobBoardsSite.Client.Services.Interfaces
+namespace JobBoardsSite.Client.Services.Interfaces;
+
+public interface IClientRecruiterService
 {
-	public interface IClientRecruiterService
-	{
-		Task UpdateProfile(RecruiterProfileRequest request);
+	Task UpdateProfile(RecruiterProfileRequest request);
 
-		Task<List<ApplicantsTableResponse>> GetApplicantsTable();
+	Task<List<ApplicantsTableResponse>> GetApplicantsTable();
 
-		Task<List<JobItemTableResponse>> GetJobsTable();
+	Task<List<JobItemTableResponse>> GetJobsTable();
 
-		Task<RecruiterResponse> GetRecruiterInfo(int id);
+	Task<RecruiterResponse> GetRecruiterInfo(int id);
 
-		Task<RecruiterResponse> GetMyRecruiterInfo();
-	}
+	Task<RecruiterResponse> GetMyRecruiterInfo();
 }

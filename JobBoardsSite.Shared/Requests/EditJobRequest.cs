@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace JobBoardsSite.Shared.Requests;
 
-namespace JobBoardsSite.Shared.Requests
+public class EditJobRequest : JobRequest
 {
-    public class EditJobRequest:JobRequest
-    {
-        public int Id { get; set; }
-    }
+	public int Id { get; set; }
 }
